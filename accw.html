@@ -18,24 +18,22 @@
     }
 
     :root {
-      /* ── ACCW LOGO PALETTE: deep navy + steel blue + white ── */
-      --black: #06121f;
-      --navy: #0a1d30;
-      --steel: #0f2841;
-      --slate: #193b59;
-      --concrete: #8ba2b8;
-      --concrete-light: #c3d4e3;
-      --amber: #3f86c4;
-      /* logo steel-blue accent (was amber) */
-      --amber-dim: #2a6299;
-      --amber-glow: rgba(63, 134, 196, 0.18);
-      --cyan: #9cc6ec;
-      /* light logo blue highlight (was cyan) */
-      --cyan-dim: rgba(156, 198, 236, 0.12);
-      --white: #eef3f8;
-      --dim: #4f6a85;
-      --border: rgba(255, 255, 255, 0.06);
-      --border-amber: rgba(63, 134, 196, 0.38);
+      /* ── ACCW LOGO PALETTE: deep navy + white + steel blue ── */
+      --black: #060e1c;       /* deepest navy, darkest bg          */
+      --navy: #0c1a30;        /* main section bg — logo outer ring */
+      --steel: #102240;       /* slightly lighter navy panels      */
+      --slate: #1a3358;       /* hover / card bg                   */
+      --concrete: #8fa8c0;    /* body text — muted steel-blue grey */
+      --concrete-light: #c4d6e8; /* lighter body text              */
+      --amber: #ffffff;       /* PRIMARY ACCENT = pure white (logo text/mountain) */
+      --amber-dim: #c4d6e8;   /* dimmer white = silver-blue        */
+      --amber-glow: rgba(255,255,255,0.10);
+      --cyan: #6a9abf;        /* steel-blue mid tone from logo     */
+      --cyan-dim: rgba(106,154,191,0.15);
+      --white: #f0f5fa;       /* near-white                        */
+      --dim: #3a526a;         /* very muted for placeholders       */
+      --border: rgba(255,255,255,0.07);
+      --border-amber: rgba(255,255,255,0.25);
       --font-display: 'Bebas Neue', sans-serif;
       --font-body: 'Rajdhani', sans-serif;
       --font-mono: 'Share Tech Mono', monospace;
@@ -159,7 +157,7 @@
     }
 
     .nav-cta {
-      background: var(--amber);
+      background: var(--white);
       color: var(--black) !important;
       padding: 0.5rem 1.4rem;
       font-weight: 700 !important;
@@ -400,7 +398,7 @@
       display: block;
       width: 40px;
       height: 1px;
-      background: var(--amber);
+      background: var(--cyan);
     }
 
     h1 {
@@ -446,12 +444,12 @@
     }
 
     .btn-solid {
-      background: var(--amber);
+      background: var(--white);
       color: var(--black);
     }
 
     .btn-solid:hover {
-      background: #5aa0d8;
+      background: #c4d6e8;
       transform: translateY(-2px)
     }
 
@@ -488,7 +486,7 @@
     .scroll-bar {
       width: 1px;
       height: 60px;
-      background: linear-gradient(to bottom, var(--amber), transparent);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
       animation: scrollAnim 2s ease-in-out infinite;
     }
 
@@ -508,7 +506,9 @@
 
     /* ─── STATS BAND ─── */
     .stats-band {
-      background: var(--amber);
+      background: linear-gradient(90deg,var(--navy),var(--steel),var(--navy));
+      border-top:1px solid rgba(255,255,255,0.15);
+      border-bottom:1px solid rgba(255,255,255,0.15);
       padding: 1.5rem 4rem;
       display: flex;
       justify-content: space-around;
@@ -524,7 +524,7 @@
       font-family: var(--font-display);
       font-size: 2.4rem;
       line-height: 1;
-      color: var(--black);
+      color: var(--amber);
     }
 
     .stat-l {
@@ -532,7 +532,7 @@
       font-weight: 600;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: rgba(0, 0, 0, 0.6);
+      color: var(--concrete);
     }
 
     /* ─── SECTIONS ─── */
@@ -1838,13 +1838,14 @@
 
   <!-- ─── NAV ─── -->
   <nav>
-    <a href="#" class="logo-mark">
-      <div class="logo-icon"></div>
-      A<span>CC</span>W
+    <a href="#" class="logo-mark" style="gap:0">
+      <img src="LOGO.png" alt="ACCW Logo"
+        style="height:58px;width:58px;border-radius:50%;object-fit:cover;border:2px solid rgba(200,168,75,0.5);box-shadow:0 0 12px rgba(200,168,75,0.2);flex-shrink:0"/>
     </a>
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#products">Products</a></li>
+       <li><a href="accw_pricing.html">Pricing</a></li>
       <li><a href="#why">Quality</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -1867,80 +1868,62 @@
   </nav>
 
   <!-- ─── HERO ─── -->
-  <section id="hero">
-    <div class="grid-floor"></div>
-    <div class="v-lines">
-      <div class="v-line"></div>
-      <div class="v-line"></div>
-      <div class="v-line"></div>
-      <div class="v-line"></div>
-      <div class="v-line"></div>
-    </div>
-    <div class="orb orb-amber"></div>
-    <div class="orb orb-blue"></div>
+  <section id="hero" style="
+    min-height:100vh;
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+    padding:0;
+  ">
+    <!-- Full-bleed background image (like InfoSignal reference) -->
+    <div style="
+      position:absolute;inset:0;
+      background-image:url('hero.png');
+      background-size:cover;
+      background-position:center top;
+      background-repeat:no-repeat;
+    "></div>
 
-    <div class="hero-poles">
-      <div class="h-pole">
-        <div class="h-pole-inner hp1">
-          <div class="h-pole-cap"></div>
-        </div>
-      </div>
-      <div class="h-pole">
-        <div class="h-pole-inner hp2">
-          <div class="h-pole-cap"></div>
-        </div>
-      </div>
-      <div class="h-pole">
-        <div class="h-pole-inner hp3">
-          <div class="h-pole-cap"></div>
-        </div>
-      </div>
-      <div class="h-pole">
-        <div class="h-pole-inner hp4">
-          <div class="h-pole-cap"></div>
-        </div>
-      </div>
-      <div class="h-pole">
-        <div class="h-pole-inner hp5">
-          <div class="h-pole-cap"></div>
-        </div>
-      </div>
-      <div class="h-pole">
-        <div class="h-pole-inner hp6">
-          <div class="h-pole-cap"></div>
-        </div>
-      </div>
-      <div class="h-pole">
-        <div class="h-pole-inner hp7">
-          <div class="h-pole-cap"></div>
-        </div>
-      </div>
-      <div class="h-pole">
-        <div class="h-pole-inner hp8">
-          <div class="h-pole-cap"></div>
-        </div>
-      </div>
-      <div class="h-pole">
-        <div class="h-pole-inner hp9">
-          <div class="h-pole-cap"></div>
-        </div>
-      </div>
-    </div>
+    <!-- Dark gradient overlay — heavier at bottom where text sits, like InfoSignal -->
+    <div style="
+      position:absolute;inset:0;
+      background:linear-gradient(
+        to bottom,
+        rgba(6,14,28,0.15) 0%,
+        rgba(6,14,28,0.15) 35%,
+        rgba(6,14,28,0.55) 68%,
+        rgba(6,14,28,0.85) 100%
+      );
+    "></div>
 
-    <div class="hero-content">
+    <!-- Nav-area top fade so nav stays readable -->
+    <div style="position:absolute;top:0;left:0;right:0;height:140px;background:linear-gradient(to bottom,rgba(7,17,30,0.6),transparent)"></div>
+
+    <!-- Hero content — bottom-left like InfoSignal -->
+    <div class="hero-content" style="
+      position:relative;z-index:10;
+      padding:0 4rem 5rem;
+      max-width:720px;
+    ">
       <div class="hero-eyebrow">SINCE 2016 — Arusha, Tanzania</div>
-      <h1>BUILT<br>TO<em>LAST.</em></h1>
-      <p class="hero-tagline">Prestressed spun concrete poles engineered for power transmission, street lighting, and
-        telecom infrastructure across Tanzania. Every pole. Every time.</p>
+      <h1 style="font-size:clamp(3.2rem,8vw,7rem);line-height:0.92">CONCRETE<br>ENGINEERED<em>TO LAST.</em></h1>
+      <p class="hero-tagline">Prestressed spun concrete poles built for power transmission, street lighting, and
+        telecom infrastructure across Tanzania. Every pole load-tested. Every time.</p>
       <div class="hero-btns">
         <a href="#products" class="btn btn-solid">View Our Poles</a>
         <a href="#contact" class="btn btn-ghost">Request Quote</a>
       </div>
     </div>
 
-    <div class="scroll-ind">
-      <span>Scroll</span>
-      <div class="scroll-bar"></div>
+    <!-- Scroll indicator — bottom right like InfoSignal -->
+    <div style="
+      position:absolute;bottom:2.5rem;right:4rem;
+      display:flex;align-items:center;gap:10px;
+      z-index:10;
+    ">
+      <span style="font-family:var(--font-mono);font-size:0.62rem;letter-spacing:3px;color:rgba(255,255,255,0.5);text-transform:uppercase">Scroll to explore</span>
+      <div style="width:1px;height:44px;background:linear-gradient(to bottom,rgba(255,255,255,0.7),transparent);animation:scrollAnim 2s ease-in-out infinite"></div>
     </div>
   </section>
 
@@ -2051,83 +2034,71 @@
           <div class="bp-id">DRG-REF: CX-09M-A</div>
           <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- Blueprint grid faint lines -->
-            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
             <!-- TAPER OUTLINE -->
-            <path d="M38 12 L36 195 L64 195 L62 12 Z" stroke="rgba(63,134,196,0.8)" stroke-width="1"
-              fill="rgba(63,134,196,0.03)" />
+            <path d="M38 12 L36 195 L64 195 L62 12 Z" stroke="rgba(106,154,191,0.8)" stroke-width="1"
+              fill="rgba(106,154,191,0.03)" />
             <!-- INNER HOLLOW (spun = hollow) -->
-            <ellipse cx="50" cy="12" rx="11" ry="3" stroke="rgba(63,134,196,0.5)" stroke-width="0.7" fill="none" />
-            <ellipse cx="50" cy="195" rx="14" ry="3.5" stroke="rgba(63,134,196,0.5)" stroke-width="0.7" fill="none" />
+            <ellipse cx="50" cy="12" rx="11" ry="3" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none" />
+            <ellipse cx="50" cy="195" rx="14" ry="3.5" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none" />
             <!-- PRESTRESS WIRE DOTS (cross-section circles along length) -->
-            <circle cx="41" cy="30" r="2.2" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="59" cy="30" r="2.2" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="41" cy="70" r="2.2" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="59" cy="70" r="2.2" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="41" cy="110" r="2.2" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="59" cy="110" r="2.2" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="41" cy="150" r="2.2" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="59" cy="150" r="2.2" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="41" cy="30" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="59" cy="30" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="41" cy="70" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="59" cy="70" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="41" cy="110" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="59" cy="110" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="41" cy="150" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="59" cy="150" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
             <!-- SPIRAL STIRRUP WAVES -->
-            <path d="M39 45 Q50 41 61 45 Q50 49 39 45" stroke="rgba(180,210,255,0.5)" stroke-width="0.8" fill="none" />
-            <path d="M39 85 Q50 81 61 85 Q50 89 39 85" stroke="rgba(180,210,255,0.5)" stroke-width="0.8" fill="none" />
-            <path d="M39 125 Q50 121 61 125 Q50 129 39 125" stroke="rgba(180,210,255,0.5)" stroke-width="0.8"
+            <path d="M39 45 Q50 41 61 45 Q50 49 39 45" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none" />
+            <path d="M39 85 Q50 81 61 85 Q50 89 39 85" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none" />
+            <path d="M39 125 Q50 121 61 125 Q50 129 39 125" stroke="rgba(180,210,235,0.5)" stroke-width="0.8"
               fill="none" />
-            <path d="M39 165 Q50 161 61 165 Q50 169 39 165" stroke="rgba(180,210,255,0.5)" stroke-width="0.8"
+            <path d="M39 165 Q50 161 61 165 Q50 169 39 165" stroke="rgba(180,210,235,0.5)" stroke-width="0.8"
               fill="none" />
             <!-- CAP PLATE -->
-            <rect x="33" y="8" width="34" height="6" rx="1" stroke="rgba(63,134,196,0.9)" stroke-width="1"
-              fill="rgba(63,134,196,0.08)" />
+            <rect x="33" y="8" width="34" height="6" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1"
+              fill="rgba(106,154,191,0.08)" />
             <!-- BASE PLATE -->
-            <rect x="29" y="193" width="42" height="8" rx="1" stroke="rgba(63,134,196,0.9)" stroke-width="1"
-              fill="rgba(63,134,196,0.08)" />
+            <rect x="29" y="193" width="42" height="8" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1"
+              fill="rgba(106,154,191,0.08)" />
             <!-- DIM LINE RIGHT -->
-            <line x1="70" y1="12" x2="70" y2="195" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="67" y1="12" x2="73" y2="12" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="67" y1="195" x2="73" y2="195" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <text x="75" y="108" fill="rgba(63,134,196,0.9)" font-size="8"
+            <line x1="70" y1="12" x2="70" y2="195" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="67" y1="12" x2="73" y2="12" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="67" y1="195" x2="73" y2="195" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <text x="75" y="108" fill="rgba(106,154,191,0.9)" font-size="8"
               font-family="'Share Tech Mono',monospace">9m</text>
             <!-- DIM LINE BOTTOM WIDTH -->
-            <line x1="36" y1="207" x2="64" y2="207" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="36" y1="204" x2="36" y2="210" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="64" y1="204" x2="64" y2="210" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <text x="28" y="218" fill="rgba(156,198,236,0.7)" font-size="6.5"
-              font-family="'Share Tech Mono',monospace">∅200</text>
+            <line x1="36" y1="207" x2="64" y2="207" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="36" y1="204" x2="36" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="64" y1="204" x2="64" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <text x="28" y="218" fill="rgba(180,210,235,0.7)" font-size="6.5"
+              font-family="'Share Tech Mono',monospace">∅390</text>
             <!-- TOP DIM -->
-            <text x="30" y="9" fill="rgba(156,198,236,0.6)" font-size="5.5"
-              font-family="'Share Tech Mono',monospace">∅100</text>
+            <text x="30" y="9" fill="rgba(180,210,235,0.6)" font-size="5.5"
+              font-family="'Share Tech Mono',monospace">∅190</text>
           </svg>
         </div>
         <div class="pole-info">
           <div class="pole-size-num">9M</div>
           <div class="pole-badge">LIGHT DUTY</div>
           <table class="spec-table">
-            <tr>
-              <td>Length</td>
-              <td>9,000 mm</td>
-            </tr>
-            <tr>
-              <td>Top Ø</td>
-              <td>100 mm</td>
-            </tr>
-            <tr>
-              <td>Base Ø</td>
-              <td>200 mm</td>
-            </tr>
-            <tr>
-              <td>Weight</td>
-              <td>~480 kg</td>
-            </tr>
-            <tr>
-              <td>Grade</td>
-              <td>SC75</td>
-            </tr>
-            <tr>
-              <td>Steel</td>
-              <td>HT Prestressed</td>
-            </tr>
+            <tr><td>Length</td><td>9,000 mm</td></tr>
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>310 mm</td></tr>
+            <tr><td>Wall</td><td>55 mm</td></tr>
+            <tr><td>Weight</td><td>~746 kg</td></tr>
+            <tr><td>Spiral wire</td><td>∅3 mm @ 150 mm</td></tr>
+            <tr><td>Ring bar</td><td>∅6 mm @ 500 mm</td></tr>
+            <tr><td>PC wire min</td><td>∅7 mm</td></tr>
+            <tr><td>Cover</td><td>25 mm</td></tr>
+            <tr><td>Taper</td><td>1/75</td></tr>
+            <tr><td>Grade</td><td>SC75</td></tr>
+            <tr><td>Colour code</td><td>Black</td></tr>
           </table>
           <p class="pole-use">LV distribution, street lighting, rural electrification, and telecoms in residential
             zones.</p>
@@ -2139,77 +2110,65 @@
         <div class="bp-area">
           <div class="bp-id">DRG-REF: CX-10M-A</div>
           <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <path d="M37 10 L34 196 L66 196 L63 10 Z" stroke="rgba(63,134,196,0.8)" stroke-width="1"
-              fill="rgba(63,134,196,0.03)" />
-            <ellipse cx="50" cy="10" rx="12" ry="3" stroke="rgba(63,134,196,0.5)" stroke-width="0.7" fill="none" />
-            <ellipse cx="50" cy="196" rx="16" ry="3.5" stroke="rgba(63,134,196,0.5)" stroke-width="0.7" fill="none" />
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <path d="M37 10 L34 196 L66 196 L63 10 Z" stroke="rgba(106,154,191,0.8)" stroke-width="1"
+              fill="rgba(106,154,191,0.03)" />
+            <ellipse cx="50" cy="10" rx="12" ry="3" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none" />
+            <ellipse cx="50" cy="196" rx="16" ry="3.5" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none" />
             <!-- 5 wire levels -->
-            <circle cx="40" cy="28" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="60" cy="28" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="40" cy="65" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="60" cy="65" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="40" cy="103" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="60" cy="103" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="40" cy="141" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="60" cy="141" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="40" cy="178" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="60" cy="178" r="2.3" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <path d="M38 43 Q50 39 62 43 Q50 47 38 43" stroke="rgba(180,210,255,0.5)" stroke-width="0.8" fill="none" />
-            <path d="M38 82 Q50 78 62 82 Q50 86 38 82" stroke="rgba(180,210,255,0.5)" stroke-width="0.8" fill="none" />
-            <path d="M38 120 Q50 116 62 120 Q50 124 38 120" stroke="rgba(180,210,255,0.5)" stroke-width="0.8"
+            <circle cx="40" cy="28" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="60" cy="28" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="40" cy="65" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="60" cy="65" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="40" cy="103" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="60" cy="103" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="40" cy="141" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="60" cy="141" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="40" cy="178" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="60" cy="178" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <path d="M38 43 Q50 39 62 43 Q50 47 38 43" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none" />
+            <path d="M38 82 Q50 78 62 82 Q50 86 38 82" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none" />
+            <path d="M38 120 Q50 116 62 120 Q50 124 38 120" stroke="rgba(180,210,235,0.5)" stroke-width="0.8"
               fill="none" />
-            <path d="M38 158 Q50 154 62 158 Q50 162 38 158" stroke="rgba(180,210,255,0.5)" stroke-width="0.8"
+            <path d="M38 158 Q50 154 62 158 Q50 162 38 158" stroke="rgba(180,210,235,0.5)" stroke-width="0.8"
               fill="none" />
-            <rect x="31" y="6" width="38" height="6" rx="1" stroke="rgba(63,134,196,0.9)" stroke-width="1"
-              fill="rgba(63,134,196,0.08)" />
-            <rect x="27" y="194" width="46" height="8" rx="1" stroke="rgba(63,134,196,0.9)" stroke-width="1"
-              fill="rgba(63,134,196,0.08)" />
-            <line x1="72" y1="10" x2="72" y2="196" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="69" y1="10" x2="75" y2="10" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="69" y1="196" x2="75" y2="196" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <text x="76" y="108" fill="rgba(63,134,196,0.9)" font-size="8"
+            <rect x="31" y="6" width="38" height="6" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1"
+              fill="rgba(106,154,191,0.08)" />
+            <rect x="27" y="194" width="46" height="8" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1"
+              fill="rgba(106,154,191,0.08)" />
+            <line x1="72" y1="10" x2="72" y2="196" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="69" y1="10" x2="75" y2="10" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="69" y1="196" x2="75" y2="196" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <text x="76" y="108" fill="rgba(106,154,191,0.9)" font-size="8"
               font-family="'Share Tech Mono',monospace">10m</text>
-            <line x1="34" y1="207" x2="66" y2="207" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="34" y1="204" x2="34" y2="210" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="66" y1="204" x2="66" y2="210" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <text x="24" y="218" fill="rgba(156,198,236,0.7)" font-size="6.5"
-              font-family="'Share Tech Mono',monospace">∅220</text>
-            <text x="28" y="9" fill="rgba(156,198,236,0.6)" font-size="5.5"
-              font-family="'Share Tech Mono',monospace">∅110</text>
+            <line x1="34" y1="207" x2="66" y2="207" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="34" y1="204" x2="34" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="66" y1="204" x2="66" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <text x="24" y="218" fill="rgba(180,210,235,0.7)" font-size="6.5"
+              font-family="'Share Tech Mono',monospace">∅323</text>
+            <text x="28" y="9" fill="rgba(180,210,235,0.6)" font-size="5.5"
+              font-family="'Share Tech Mono',monospace">∅190</text>
           </svg>
         </div>
         <div class="pole-info">
           <div class="pole-size-num">10M</div>
           <div class="pole-badge">STANDARD DUTY</div>
           <table class="spec-table">
-            <tr>
-              <td>Length</td>
-              <td>10,000 mm</td>
-            </tr>
-            <tr>
-              <td>Top Ø</td>
-              <td>110 mm</td>
-            </tr>
-            <tr>
-              <td>Base Ø</td>
-              <td>220 mm</td>
-            </tr>
-            <tr>
-              <td>Weight</td>
-              <td>~600 kg</td>
-            </tr>
-            <tr>
-              <td>Grade</td>
-              <td>SC75</td>
-            </tr>
-            <tr>
-              <td>Steel</td>
-              <td>HT Prestressed</td>
-            </tr>
+            <tr><td>Length</td><td>10,000 mm</td></tr>
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>323 mm</td></tr>
+            <tr><td>Wall</td><td>55 mm</td></tr>
+            <tr><td>Weight</td><td>~856 kg</td></tr>
+            <tr><td>Spiral wire</td><td>∅3 mm @ 150 mm</td></tr>
+            <tr><td>Ring bar</td><td>∅6 mm @ 500 mm</td></tr>
+            <tr><td>PC wire min</td><td>∅7 mm</td></tr>
+            <tr><td>Cover</td><td>25 mm</td></tr>
+            <tr><td>Taper</td><td>1/75</td></tr>
+            <tr><td>Grade</td><td>SC75</td></tr>
+            <tr><td>Colour code</td><td>Green</td></tr>
           </table>
           <p class="pole-use">MV overhead lines, urban street lighting, distribution networks in towns and peri-urban
             zones.</p>
@@ -2221,79 +2180,67 @@
         <div class="bp-area">
           <div class="bp-id">DRG-REF: CX-12M-B</div>
           <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <path d="M36 8 L32 197 L68 197 L64 8 Z" stroke="rgba(63,134,196,0.8)" stroke-width="1"
-              fill="rgba(63,134,196,0.03)" />
-            <ellipse cx="50" cy="8" rx="13" ry="3.2" stroke="rgba(63,134,196,0.5)" stroke-width="0.7" fill="none" />
-            <ellipse cx="50" cy="197" rx="18" ry="3.8" stroke="rgba(63,134,196,0.5)" stroke-width="0.7" fill="none" />
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <path d="M36 8 L32 197 L68 197 L64 8 Z" stroke="rgba(106,154,191,0.8)" stroke-width="1"
+              fill="rgba(106,154,191,0.03)" />
+            <ellipse cx="50" cy="8" rx="13" ry="3.2" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none" />
+            <ellipse cx="50" cy="197" rx="18" ry="3.8" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none" />
             <!-- 6 wire levels -->
-            <circle cx="39" cy="25" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="61" cy="25" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="39" cy="60" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="61" cy="60" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="39" cy="95" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="61" cy="95" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="39" cy="130" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="61" cy="130" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="39" cy="165" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <circle cx="61" cy="165" r="2.5" stroke="rgba(156,198,236,0.8)" stroke-width="0.8" fill="none" />
-            <path d="M37 38 Q50 34 63 38 Q50 42 37 38" stroke="rgba(180,210,255,0.55)" stroke-width="0.9" fill="none" />
-            <path d="M37 75 Q50 71 63 75 Q50 79 37 75" stroke="rgba(180,210,255,0.55)" stroke-width="0.9" fill="none" />
-            <path d="M37 112 Q50 108 63 112 Q50 116 37 112" stroke="rgba(180,210,255,0.55)" stroke-width="0.9"
+            <circle cx="39" cy="25" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="61" cy="25" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="39" cy="60" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="61" cy="60" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="39" cy="95" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="61" cy="95" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="39" cy="130" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="61" cy="130" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="39" cy="165" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <circle cx="61" cy="165" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none" />
+            <path d="M37 38 Q50 34 63 38 Q50 42 37 38" stroke="rgba(180,210,235,0.55)" stroke-width="0.9" fill="none" />
+            <path d="M37 75 Q50 71 63 75 Q50 79 37 75" stroke="rgba(180,210,235,0.55)" stroke-width="0.9" fill="none" />
+            <path d="M37 112 Q50 108 63 112 Q50 116 37 112" stroke="rgba(180,210,235,0.55)" stroke-width="0.9"
               fill="none" />
-            <path d="M37 148 Q50 144 63 148 Q50 152 37 148" stroke="rgba(180,210,255,0.55)" stroke-width="0.9"
+            <path d="M37 148 Q50 144 63 148 Q50 152 37 148" stroke="rgba(180,210,235,0.55)" stroke-width="0.9"
               fill="none" />
-            <path d="M37 182 Q50 178 63 182 Q50 186 37 182" stroke="rgba(180,210,255,0.55)" stroke-width="0.9"
+            <path d="M37 182 Q50 178 63 182 Q50 186 37 182" stroke="rgba(180,210,235,0.55)" stroke-width="0.9"
               fill="none" />
-            <rect x="29" y="4" width="42" height="6" rx="1" stroke="rgba(63,134,196,0.9)" stroke-width="1"
-              fill="rgba(63,134,196,0.08)" />
-            <rect x="25" y="195" width="50" height="8" rx="1" stroke="rgba(63,134,196,0.9)" stroke-width="1"
-              fill="rgba(63,134,196,0.08)" />
-            <line x1="74" y1="8" x2="74" y2="197" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="71" y1="8" x2="77" y2="8" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="71" y1="197" x2="77" y2="197" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <text x="78" y="108" fill="rgba(63,134,196,0.9)" font-size="8"
+            <rect x="29" y="4" width="42" height="6" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1"
+              fill="rgba(106,154,191,0.08)" />
+            <rect x="25" y="195" width="50" height="8" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1"
+              fill="rgba(106,154,191,0.08)" />
+            <line x1="74" y1="8" x2="74" y2="197" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="71" y1="8" x2="77" y2="8" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="71" y1="197" x2="77" y2="197" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <text x="78" y="108" fill="rgba(106,154,191,0.9)" font-size="8"
               font-family="'Share Tech Mono',monospace">12m</text>
-            <line x1="32" y1="207" x2="68" y2="207" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="32" y1="204" x2="32" y2="210" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="68" y1="204" x2="68" y2="210" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <text x="22" y="218" fill="rgba(156,198,236,0.7)" font-size="6.5"
-              font-family="'Share Tech Mono',monospace">∅260</text>
-            <text x="26" y="7" fill="rgba(156,198,236,0.6)" font-size="5.5"
-              font-family="'Share Tech Mono',monospace">∅120</text>
+            <line x1="32" y1="207" x2="68" y2="207" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="32" y1="204" x2="32" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="68" y1="204" x2="68" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <text x="22" y="218" fill="rgba(180,210,235,0.7)" font-size="6.5"
+              font-family="'Share Tech Mono',monospace">∅350</text>
+            <text x="26" y="7" fill="rgba(180,210,235,0.6)" font-size="5.5"
+              font-family="'Share Tech Mono',monospace">∅190</text>
           </svg>
         </div>
         <div class="pole-info">
           <div class="pole-size-num">12M</div>
           <div class="pole-badge">MED-HEAVY DUTY</div>
           <table class="spec-table">
-            <tr>
-              <td>Length</td>
-              <td>12,000 mm</td>
-            </tr>
-            <tr>
-              <td>Top Ø</td>
-              <td>120 mm</td>
-            </tr>
-            <tr>
-              <td>Base Ø</td>
-              <td>260 mm</td>
-            </tr>
-            <tr>
-              <td>Weight</td>
-              <td>~820 kg</td>
-            </tr>
-            <tr>
-              <td>Grade</td>
-              <td>SC75</td>
-            </tr>
-            <tr>
-              <td>Steel</td>
-              <td>HT Prestressed</td>
-            </tr>
+            <tr><td>Length</td><td>12,000 mm</td></tr>
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>350 mm</td></tr>
+            <tr><td>Wall</td><td>55 mm</td></tr>
+            <tr><td>Weight</td><td>~1,095 kg</td></tr>
+            <tr><td>Spiral wire</td><td>∅3 mm @ 150 mm</td></tr>
+            <tr><td>Ring bar</td><td>∅6 mm @ 500 mm</td></tr>
+            <tr><td>PC wire min</td><td>∅7 mm</td></tr>
+            <tr><td>Cover</td><td>25 mm</td></tr>
+            <tr><td>Taper</td><td>1/75</td></tr>
+            <tr><td>Grade</td><td>SC75</td></tr>
+            <tr><td>Colour code</td><td>Yellow</td></tr>
           </table>
           <p class="pole-use">11kV distribution, telecom backbone, highway lighting, and industrial zone infrastructure.
           </p>
@@ -2305,82 +2252,70 @@
         <div class="bp-area">
           <div class="bp-id">DRG-REF: CX-13M-B</div>
           <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(156,198,236,0.06)" stroke-width="0.5" />
-            <path d="M35 6 L30 198 L70 198 L65 6 Z" stroke="rgba(63,134,196,0.85)" stroke-width="1.1"
-              fill="rgba(63,134,196,0.04)" />
-            <ellipse cx="50" cy="6" rx="14" ry="3.5" stroke="rgba(63,134,196,0.6)" stroke-width="0.8" fill="none" />
-            <ellipse cx="50" cy="198" rx="20" ry="4" stroke="rgba(63,134,196,0.6)" stroke-width="0.8" fill="none" />
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(180,210,235,0.06)" stroke-width="0.5" />
+            <path d="M35 6 L30 198 L70 198 L65 6 Z" stroke="rgba(106,154,191,0.85)" stroke-width="1.1"
+              fill="rgba(106,154,191,0.04)" />
+            <ellipse cx="50" cy="6" rx="14" ry="3.5" stroke="rgba(106,154,191,0.6)" stroke-width="0.8" fill="none" />
+            <ellipse cx="50" cy="198" rx="20" ry="4" stroke="rgba(106,154,191,0.6)" stroke-width="0.8" fill="none" />
             <!-- 4 wires per level = heavier pole -->
-            <circle cx="38" cy="22" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
-            <circle cx="62" cy="22" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
-            <circle cx="44" cy="22" r="2" stroke="rgba(156,198,236,0.5)" stroke-width="0.7" fill="none" />
-            <circle cx="56" cy="22" r="2" stroke="rgba(156,198,236,0.5)" stroke-width="0.7" fill="none" />
-            <circle cx="38" cy="57" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
-            <circle cx="62" cy="57" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
-            <circle cx="38" cy="92" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
-            <circle cx="62" cy="92" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
-            <circle cx="38" cy="127" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
-            <circle cx="62" cy="127" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
-            <circle cx="38" cy="162" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
-            <circle cx="62" cy="162" r="2.6" stroke="rgba(156,198,236,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="38" cy="22" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="62" cy="22" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="44" cy="22" r="2" stroke="rgba(180,210,235,0.5)" stroke-width="0.7" fill="none" />
+            <circle cx="56" cy="22" r="2" stroke="rgba(180,210,235,0.5)" stroke-width="0.7" fill="none" />
+            <circle cx="38" cy="57" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="62" cy="57" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="38" cy="92" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="62" cy="92" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="38" cy="127" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="62" cy="127" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="38" cy="162" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
+            <circle cx="62" cy="162" r="2.6" stroke="rgba(180,210,235,0.85)" stroke-width="0.9" fill="none" />
             <!-- Denser stirrups -->
-            <path d="M36 35 Q50 31 64 35 Q50 39 36 35" stroke="rgba(180,210,255,0.6)" stroke-width="0.9" fill="none" />
-            <path d="M36 70 Q50 66 64 70 Q50 74 36 70" stroke="rgba(180,210,255,0.6)" stroke-width="0.9" fill="none" />
-            <path d="M36 105 Q50 101 64 105 Q50 109 36 105" stroke="rgba(180,210,255,0.6)" stroke-width="0.9"
+            <path d="M36 35 Q50 31 64 35 Q50 39 36 35" stroke="rgba(180,210,235,0.6)" stroke-width="0.9" fill="none" />
+            <path d="M36 70 Q50 66 64 70 Q50 74 36 70" stroke="rgba(180,210,235,0.6)" stroke-width="0.9" fill="none" />
+            <path d="M36 105 Q50 101 64 105 Q50 109 36 105" stroke="rgba(180,210,235,0.6)" stroke-width="0.9"
               fill="none" />
-            <path d="M36 140 Q50 136 64 140 Q50 144 36 140" stroke="rgba(180,210,255,0.6)" stroke-width="0.9"
+            <path d="M36 140 Q50 136 64 140 Q50 144 36 140" stroke="rgba(180,210,235,0.6)" stroke-width="0.9"
               fill="none" />
-            <path d="M36 175 Q50 171 64 175 Q50 179 36 175" stroke="rgba(180,210,255,0.6)" stroke-width="0.9"
+            <path d="M36 175 Q50 171 64 175 Q50 179 36 175" stroke="rgba(180,210,235,0.6)" stroke-width="0.9"
               fill="none" />
-            <rect x="27" y="2" width="46" height="6" rx="1" stroke="rgba(63,134,196,1)" stroke-width="1.1"
-              fill="rgba(63,134,196,0.1)" />
-            <rect x="23" y="196" width="54" height="8" rx="1" stroke="rgba(63,134,196,1)" stroke-width="1.1"
-              fill="rgba(63,134,196,0.1)" />
-            <line x1="76" y1="6" x2="76" y2="198" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="73" y1="6" x2="79" y2="6" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="73" y1="198" x2="79" y2="198" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <text x="80" y="108" fill="rgba(63,134,196,0.9)" font-size="8"
+            <rect x="27" y="2" width="46" height="6" rx="1" stroke="rgba(106,154,191,1)" stroke-width="1.1"
+              fill="rgba(106,154,191,0.1)" />
+            <rect x="23" y="196" width="54" height="8" rx="1" stroke="rgba(106,154,191,1)" stroke-width="1.1"
+              fill="rgba(106,154,191,0.1)" />
+            <line x1="76" y1="6" x2="76" y2="198" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="73" y1="6" x2="79" y2="6" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="73" y1="198" x2="79" y2="198" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <text x="80" y="108" fill="rgba(106,154,191,0.9)" font-size="8"
               font-family="'Share Tech Mono',monospace">13m</text>
-            <line x1="30" y1="207" x2="70" y2="207" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="30" y1="204" x2="30" y2="210" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <line x1="70" y1="204" x2="70" y2="210" stroke="rgba(63,134,196,0.4)" stroke-width="0.5" />
-            <text x="20" y="218" fill="rgba(156,198,236,0.7)" font-size="6.5"
-              font-family="'Share Tech Mono',monospace">∅280</text>
-            <text x="24" y="5" fill="rgba(156,198,236,0.6)" font-size="5.5"
-              font-family="'Share Tech Mono',monospace">∅130</text>
+            <line x1="30" y1="207" x2="70" y2="207" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="30" y1="204" x2="30" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <line x1="70" y1="204" x2="70" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5" />
+            <text x="20" y="218" fill="rgba(180,210,235,0.7)" font-size="6.5"
+              font-family="'Share Tech Mono',monospace">∅363</text>
+            <text x="24" y="5" fill="rgba(180,210,235,0.6)" font-size="5.5"
+              font-family="'Share Tech Mono',monospace">∅190</text>
           </svg>
         </div>
         <div class="pole-info">
           <div class="pole-size-num">13M</div>
           <div class="pole-badge">HEAVY DUTY</div>
           <table class="spec-table">
-            <tr>
-              <td>Length</td>
-              <td>13,000 mm</td>
-            </tr>
-            <tr>
-              <td>Top Ø</td>
-              <td>130 mm</td>
-            </tr>
-            <tr>
-              <td>Base Ø</td>
-              <td>280 mm</td>
-            </tr>
-            <tr>
-              <td>Weight</td>
-              <td>~1,050 kg</td>
-            </tr>
-            <tr>
-              <td>Grade</td>
-              <td>SC75</td>
-            </tr>
-            <tr>
-              <td>Steel</td>
-              <td>HT Prestressed</td>
-            </tr>
+            <tr><td>Length</td><td>13,000 mm</td></tr>
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>363 mm</td></tr>
+            <tr><td>Wall</td><td>55 mm</td></tr>
+            <tr><td>Weight</td><td>~1,224 kg</td></tr>
+            <tr><td>Spiral wire</td><td>∅3 mm @ 150 mm</td></tr>
+            <tr><td>Ring bar</td><td>∅6 mm @ 500 mm</td></tr>
+            <tr><td>PC wire min</td><td>∅7 mm</td></tr>
+            <tr><td>Cover</td><td>25 mm</td></tr>
+            <tr><td>Taper</td><td>1/75</td></tr>
+            <tr><td>Grade</td><td>SC75</td></tr>
+            <tr><td>Colour code</td><td>Red</td></tr>
           </table>
           <p class="pole-use">33kV transmission, corner poles under high horizontal load, major highway lighting masts.
           </p>
@@ -2388,95 +2323,83 @@
       </div>
 
       <!-- ═══ 15M POLE ═══ -->
-      <div class="pole-card" style="border:1px solid rgba(63,134,196,0.4);">
+      <div class="pole-card" style="border:1px solid rgba(106,154,191,0.4);">
         <div class="bp-area"
-          style="background:linear-gradient(rgba(63,134,196,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(63,134,196,0.06) 1px,transparent 1px),#060f1e;background-size:18px 18px;">
-          <div class="bp-id" style="color:rgba(63,134,196,0.7)">DRG-REF: CX-15M-C ★</div>
+          style="background:linear-gradient(rgba(106,154,191,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(106,154,191,0.06) 1px,transparent 1px),#060f1e;background-size:18px 18px;">
+          <div class="bp-id" style="color:rgba(106,154,191,0.7)">DRG-REF: CX-15M-C ★</div>
           <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(63,134,196,0.08)" stroke-width="0.5" />
-            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(63,134,196,0.08)" stroke-width="0.5" />
-            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(63,134,196,0.08)" stroke-width="0.5" />
-            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(63,134,196,0.08)" stroke-width="0.5" />
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(106,154,191,0.08)" stroke-width="0.5" />
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(106,154,191,0.08)" stroke-width="0.5" />
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(106,154,191,0.08)" stroke-width="0.5" />
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(106,154,191,0.08)" stroke-width="0.5" />
             <!-- Wider, bolder pole -->
-            <path d="M33 4 L27 198 L73 198 L67 4 Z" stroke="rgba(63,134,196,1)" stroke-width="1.3"
-              fill="rgba(63,134,196,0.06)" />
-            <ellipse cx="50" cy="4" rx="17" ry="4" stroke="rgba(63,134,196,0.7)" stroke-width="1" fill="none" />
-            <ellipse cx="50" cy="198" rx="23" ry="5" stroke="rgba(63,134,196,0.7)" stroke-width="1" fill="none" />
+            <path d="M33 4 L27 198 L73 198 L67 4 Z" stroke="rgba(106,154,191,1)" stroke-width="1.3"
+              fill="rgba(106,154,191,0.06)" />
+            <ellipse cx="50" cy="4" rx="17" ry="4" stroke="rgba(106,154,191,0.7)" stroke-width="1" fill="none" />
+            <ellipse cx="50" cy="198" rx="23" ry="5" stroke="rgba(106,154,191,0.7)" stroke-width="1" fill="none" />
             <!-- 4 wires at 6 levels -->
-            <circle cx="36" cy="20" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="64" cy="20" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="43" cy="20" r="2.2" stroke="rgba(156,198,236,0.6)" stroke-width="0.8" fill="none" />
-            <circle cx="57" cy="20" r="2.2" stroke="rgba(156,198,236,0.6)" stroke-width="0.8" fill="none" />
-            <circle cx="36" cy="54" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="64" cy="54" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="43" cy="54" r="2.2" stroke="rgba(156,198,236,0.6)" stroke-width="0.8" fill="none" />
-            <circle cx="57" cy="54" r="2.2" stroke="rgba(156,198,236,0.6)" stroke-width="0.8" fill="none" />
-            <circle cx="36" cy="88" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="64" cy="88" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="36" cy="122" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="64" cy="122" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="36" cy="156" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="64" cy="156" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="36" cy="185" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
-            <circle cx="64" cy="185" r="3" stroke="rgba(156,198,236,1)" stroke-width="1" fill="none" />
+            <circle cx="36" cy="20" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="64" cy="20" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="43" cy="20" r="2.2" stroke="rgba(180,210,235,0.6)" stroke-width="0.8" fill="none" />
+            <circle cx="57" cy="20" r="2.2" stroke="rgba(180,210,235,0.6)" stroke-width="0.8" fill="none" />
+            <circle cx="36" cy="54" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="64" cy="54" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="43" cy="54" r="2.2" stroke="rgba(180,210,235,0.6)" stroke-width="0.8" fill="none" />
+            <circle cx="57" cy="54" r="2.2" stroke="rgba(180,210,235,0.6)" stroke-width="0.8" fill="none" />
+            <circle cx="36" cy="88" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="64" cy="88" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="36" cy="122" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="64" cy="122" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="36" cy="156" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="64" cy="156" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="36" cy="185" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
+            <circle cx="64" cy="185" r="3" stroke="rgba(180,210,235,1)" stroke-width="1" fill="none" />
             <!-- Dense stirrups -->
-            <path d="M34 32 Q50 27 66 32 Q50 37 34 32" stroke="rgba(180,210,255,0.7)" stroke-width="1" fill="none" />
-            <path d="M34 65 Q50 60 66 65 Q50 70 34 65" stroke="rgba(180,210,255,0.7)" stroke-width="1" fill="none" />
-            <path d="M34 99 Q50 94 66 99 Q50 104 34 99" stroke="rgba(180,210,255,0.7)" stroke-width="1" fill="none" />
-            <path d="M34 133 Q50 128 66 133 Q50 138 34 133" stroke="rgba(180,210,255,0.7)" stroke-width="1"
+            <path d="M34 32 Q50 27 66 32 Q50 37 34 32" stroke="rgba(180,210,235,0.7)" stroke-width="1" fill="none" />
+            <path d="M34 65 Q50 60 66 65 Q50 70 34 65" stroke="rgba(180,210,235,0.7)" stroke-width="1" fill="none" />
+            <path d="M34 99 Q50 94 66 99 Q50 104 34 99" stroke="rgba(180,210,235,0.7)" stroke-width="1" fill="none" />
+            <path d="M34 133 Q50 128 66 133 Q50 138 34 133" stroke="rgba(180,210,235,0.7)" stroke-width="1"
               fill="none" />
-            <path d="M34 167 Q50 162 66 167 Q50 172 34 167" stroke="rgba(180,210,255,0.7)" stroke-width="1"
+            <path d="M34 167 Q50 162 66 167 Q50 172 34 167" stroke="rgba(180,210,235,0.7)" stroke-width="1"
               fill="none" />
             <!-- Bold cap & base -->
-            <rect x="24" y="0" width="52" height="6" rx="1" stroke="rgba(63,134,196,1)" stroke-width="1.5"
-              fill="rgba(63,134,196,0.15)" />
+            <rect x="24" y="0" width="52" height="6" rx="1" stroke="rgba(106,154,191,1)" stroke-width="1.5"
+              fill="rgba(106,154,191,0.15)" />
             <!-- Crown dot on top -->
-            <circle cx="50" cy="3" r="3" fill="rgba(63,134,196,0.8)" />
-            <rect x="19" y="196" width="62" height="10" rx="1" stroke="rgba(63,134,196,1)" stroke-width="1.5"
-              fill="rgba(63,134,196,0.15)" />
-            <line x1="78" y1="4" x2="78" y2="198" stroke="rgba(63,134,196,0.5)" stroke-width="0.6" />
-            <line x1="75" y1="4" x2="81" y2="4" stroke="rgba(63,134,196,0.5)" stroke-width="0.6" />
-            <line x1="75" y1="198" x2="81" y2="198" stroke="rgba(63,134,196,0.5)" stroke-width="0.6" />
-            <text x="82" y="108" fill="rgba(63,134,196,1)" font-size="9" font-family="'Share Tech Mono',monospace"
+            <circle cx="50" cy="3" r="3" fill="rgba(106,154,191,0.8)" />
+            <rect x="19" y="196" width="62" height="10" rx="1" stroke="rgba(106,154,191,1)" stroke-width="1.5"
+              fill="rgba(106,154,191,0.15)" />
+            <line x1="78" y1="4" x2="78" y2="198" stroke="rgba(106,154,191,0.5)" stroke-width="0.6" />
+            <line x1="75" y1="4" x2="81" y2="4" stroke="rgba(106,154,191,0.5)" stroke-width="0.6" />
+            <line x1="75" y1="198" x2="81" y2="198" stroke="rgba(106,154,191,0.5)" stroke-width="0.6" />
+            <text x="82" y="108" fill="rgba(106,154,191,1)" font-size="9" font-family="'Share Tech Mono',monospace"
               font-weight="bold">15m</text>
-            <line x1="27" y1="208" x2="73" y2="208" stroke="rgba(63,134,196,0.5)" stroke-width="0.6" />
-            <line x1="27" y1="205" x2="27" y2="211" stroke="rgba(63,134,196,0.5)" stroke-width="0.6" />
-            <line x1="73" y1="205" x2="73" y2="211" stroke="rgba(63,134,196,0.5)" stroke-width="0.6" />
-            <text x="18" y="219" fill="rgba(156,198,236,0.85)" font-size="7" font-family="'Share Tech Mono',monospace"
-              font-weight="bold">∅310</text>
-            <text x="22" y="5" fill="rgba(156,198,236,0.7)" font-size="5.5"
-              font-family="'Share Tech Mono',monospace">∅150</text>
+            <line x1="27" y1="208" x2="73" y2="208" stroke="rgba(106,154,191,0.5)" stroke-width="0.6" />
+            <line x1="27" y1="205" x2="27" y2="211" stroke="rgba(106,154,191,0.5)" stroke-width="0.6" />
+            <line x1="73" y1="205" x2="73" y2="211" stroke="rgba(106,154,191,0.5)" stroke-width="0.6" />
+            <text x="18" y="219" fill="rgba(180,210,235,0.85)" font-size="7" font-family="'Share Tech Mono',monospace"
+              font-weight="bold">∅390</text>
+            <text x="22" y="5" fill="rgba(180,210,235,0.7)" font-size="5.5"
+              font-family="'Share Tech Mono',monospace">∅190</text>
           </svg>
         </div>
         <div class="pole-info">
           <div class="pole-size-num" style="font-size:3.5rem">15M</div>
-          <div class="pole-badge" style="border-color:rgba(63,134,196,0.5);color:var(--amber)">FLAGSHIP · EXTRA HEAVY
+          <div class="pole-badge" style="border-color:rgba(106,154,191,0.5);color:var(--amber)">FLAGSHIP · EXTRA HEAVY
           </div>
           <table class="spec-table">
-            <tr>
-              <td>Length</td>
-              <td>15,000 mm</td>
-            </tr>
-            <tr>
-              <td>Top Ø</td>
-              <td>150 mm</td>
-            </tr>
-            <tr>
-              <td>Base Ø</td>
-              <td>310 mm</td>
-            </tr>
-            <tr>
-              <td>Weight</td>
-              <td>~1,500 kg</td>
-            </tr>
-            <tr>
-              <td>Grade</td>
-              <td>SC75</td>
-            </tr>
-            <tr>
-              <td>Steel</td>
-              <td>HT Prestressed</td>
-            </tr>
+            <tr><td>Length</td><td>15,000 mm</td></tr>
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>390 mm</td></tr>
+            <tr><td>Wall</td><td>55 mm</td></tr>
+            <tr><td>Weight</td><td>~1,500 kg</td></tr>
+            <tr><td>Spiral wire</td><td>∅3 mm @ 150 mm</td></tr>
+            <tr><td>Ring bar</td><td>∅6 mm @ 500 mm</td></tr>
+            <tr><td>PC wire min</td><td>∅7 mm</td></tr>
+            <tr><td>Cover</td><td>25 mm</td></tr>
+            <tr><td>Taper</td><td>1/75</td></tr>
+            <tr><td>Grade</td><td>SC75</td></tr>
+            <tr><td>Colour code</td><td>Sky Blue</td></tr>
           </table>
           <p class="pole-use">66kV sub-transmission, high-mast flood lighting, coastal high-wind zones, and heavy
             industrial infrastructure.</p>
@@ -2489,31 +2412,31 @@
       <div class="bp-leg-title">BLUEPRINT KEY</div>
       <div class="bp-leg-item">
         <svg width="16" height="16" viewBox="0 0 16 16">
-          <circle cx="8" cy="8" r="5.5" stroke="rgba(156,198,236,0.8)" stroke-width="1" fill="none" />
+          <circle cx="8" cy="8" r="5.5" stroke="rgba(180,210,235,0.8)" stroke-width="1" fill="none" />
         </svg>
         Prestressed wire — cross section
       </div>
       <div class="bp-leg-item">
         <svg width="28" height="12" viewBox="0 0 28 12">
-          <path d="M2 6 Q14 2 26 6 Q14 10 2 6" stroke="rgba(180,210,255,0.7)" stroke-width="1" fill="none" />
+          <path d="M2 6 Q14 2 26 6 Q14 10 2 6" stroke="rgba(180,210,235,0.7)" stroke-width="1" fill="none" />
         </svg>
         Helical spiral stirrup
       </div>
       <div class="bp-leg-item">
         <svg width="28" height="12" viewBox="0 0 28 12">
-          <line x1="0" y1="6" x2="28" y2="6" stroke="rgba(63,134,196,0.8)" stroke-width="1" stroke-dasharray="4 3" />
+          <line x1="0" y1="6" x2="28" y2="6" stroke="rgba(106,154,191,0.8)" stroke-width="1" stroke-dasharray="4 3" />
         </svg>
         Taper profile / surface line
       </div>
       <div class="bp-leg-item">
         <svg width="28" height="12" viewBox="0 0 28 12">
-          <rect x="1" y="2" width="26" height="8" rx="1" stroke="rgba(63,134,196,0.9)" stroke-width="1" fill="none" />
+          <rect x="1" y="2" width="26" height="8" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="none" />
         </svg>
         Cap / base steel plate
       </div>
       <div class="bp-leg-item">
         <svg width="28" height="12" viewBox="0 0 28 12">
-          <ellipse cx="14" cy="6" rx="12" ry="4" stroke="rgba(63,134,196,0.6)" stroke-width="0.8" fill="none" />
+          <ellipse cx="14" cy="6" rx="12" ry="4" stroke="rgba(106,154,191,0.6)" stroke-width="0.8" fill="none" />
         </svg>
         Hollow section (spun core)
       </div>
@@ -2684,14 +2607,9 @@
           <div class="corner-tick top-right"></div>
           <div class="corner-tick bottom-left"></div>
           <div class="corner-tick bottom-right"></div>
-          <div class="faq-image-placeholder">
-            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="placeholder-icon">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
-            <span>ADD IMAGE HERE</span>
-          </div>
+          <div class="faq-image-placeholder" style="display:flex;align-items:center;justify-content:center;height:100%">
+  <img src="MER.jpg" alt="FAQ Visual" style="width:100%;height:100%;object-fit:cover;border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,0.15)"/>
+</div>
           <div class="faq-image-caption">QUALITY AUDIT &amp; COMPLIANCE</div>
         </div>
       </div>
@@ -2820,7 +2738,7 @@
 
   <!-- ─── FOOTER ─── -->
   <footer>
-    <a href="#" class="footer-logo">ACCW</a>
+    <a href="#" class="footer-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none"><img src="LOGO.png" alt="ACCW" style="height:44px;width:44px;border-radius:50%;border:1px solid rgba(200,168,75,0.4);object-fit:cover"><span style="font-family:var(--font-display);font-size:1.3rem;letter-spacing:4px;color:var(--amber)">ACCW</span></a>
     <p>© 2026 Arusha Concrete and Cement Works Limited · Kilimamoto, Arusha · P.O. Box 952</p>
     <p>TCPM CERTIFIED · IEC COMPLIANT · <a href="https://instagram.com/accwarusha" target="_blank" rel="noopener"
         style="color:inherit;text-decoration:none">@accwarusha</a></p>
@@ -2839,12 +2757,12 @@
     document.querySelectorAll('a,button,.pole-card,.iso-pillar').forEach(el => {
       el.addEventListener('mouseenter', () => {
         ring.style.transform = 'translate(-50%,-50%) scale(1.6)';
-        ring.style.borderColor = 'rgba(63,134,196,0.9)';
+        ring.style.borderColor = 'rgba(106,154,191,0.9)';
         ring.style.opacity = '1';
       });
       el.addEventListener('mouseleave', () => {
         ring.style.transform = 'translate(-50%,-50%) scale(1)';
-        ring.style.borderColor = 'rgba(63,134,196,0.5)';
+        ring.style.borderColor = 'rgba(106,154,191,0.5)';
         ring.style.opacity = '0.5';
       });
     });

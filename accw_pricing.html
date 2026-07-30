@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACCW Pole Pricing & Proforma Invoice | Arusha Concrete and Cement Works</title>
+  <meta name="description" content="Transparent pricing on all ACCW prestressed spun concrete poles. Build and download your proforma invoice instantly." />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
+
+    :root {
+      --black:           #060e1c;
+      --navy:            #0c1a30;
+      --steel:           #102240;
+      --slate:           #1a3358;
+      --concrete:        #8fa8c0;
+      --concrete-light:  #c4d6e8;
+      --amber:           #ffffff;
+      --amber-dim:       #c4d6e8;
+      --amber-glow:      rgba(255,255,255,0.10);
+      --cyan:            #6a9abf;
+      --cyan-dim:        rgba(106,154,191,0.15);
+      --white:           #f0f5fa;
+      --dim:             #3a526a;
+      --border:          rgba(255,255,255,0.07);
+      --border-amber:    rgba(255,255,255,0.22);
+      --font-display:    'Bebas Neue', sans-serif;
+      --font-body:       'Rajdhani', sans-serif;
+      --font-mono:       'Share Tech Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CUSTOM CURSOR ─── */
+    #cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--amber);
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%,-50%);
+      transition: transform 0.1s;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    #cursor-ring {
+      width: 40px; height: 40px;
+      border: 1px solid var(--amber);
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%,-50%);
+      transition: all 0.15s ease;
+      z-index: 9998;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    /* ─── SCROLL PROGRESS ─── */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--amber), var(--cyan));
+      z-index: 600;
+      transition: width 0.05s linear;
+    }
+
+    /* ─── NAV ─── */
+    nav.main-nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 4rem;
+      background: rgba(6,14,28,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo-mark {
+      font-family: var(--font-display);
+      font-size: 1.8rem; letter-spacing: 4px;
+      color: var(--white); text-decoration: none;
+      display: flex; align-items: center; gap: 0;
+    }
+    nav.main-nav ul {
+      list-style: none; display: flex; gap: 2.5rem; align-items: center;
+    }
+    nav.main-nav ul li a {
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--concrete);
+      transition: color 0.2s;
+    }
+    nav.main-nav ul li a:hover { color: var(--amber) }
+    nav.main-nav ul li a.nav-active { color: var(--white) }
+    .nav-cta {
+      background: var(--white) !important;
+      color: var(--black) !important;
+      padding: 0.5rem 1.4rem;
+      font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--concrete-light) !important; }
+
+    /* hamburger */
+    .nav-toggle {
+      display: none; width: 42px; height: 42px;
+      background: transparent; border: 1px solid var(--border-amber);
+      border-radius: 6px; cursor: pointer;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 5px; padding: 0;
+    }
+    .nav-toggle span {
+      display: block; width: 20px; height: 2px;
+      background: var(--amber);
+      transition: transform 0.3s ease, opacity 0.2s ease;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg) }
+    .nav-toggle.open span:nth-child(2) { opacity: 0 }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg) }
+
+    .menu-overlay {
+      position: fixed; inset: 0; z-index: 540;
+      background: rgba(0,0,0,0.6);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .menu-overlay.open { opacity: 1; visibility: visible }
+
+    .mobile-menu {
+      position: fixed; top: 0; right: 0; bottom: 0; left: auto;
+      z-index: 550; width: min(80vw,320px);
+      background: rgba(6,18,31,0.98);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid var(--border-amber);
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      display: flex; flex-direction: column;
+      padding: 6rem 2rem 2rem; gap: 0.5rem;
+      pointer-events: none;
+    }
+    .mobile-menu.open { transform: translateX(0); pointer-events: auto }
+    .mobile-menu a {
+      text-decoration: none; color: var(--white);
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase;
+      padding: 1rem 0; border-bottom: 1px solid var(--border);
+      transition: color 0.2s, padding-left 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--amber); padding-left: 8px }
+    .mobile-menu .mm-cta {
+      margin-top: 1rem; background: var(--amber);
+      color: var(--black); text-align: center;
+      border: none; border-radius: 6px; padding: 1rem;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh; position: relative;
+      display: flex; align-items: flex-end;
+      overflow: hidden; padding: 0;
+      background: var(--black);
+    }
+    .hero-bp-grid {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(106,154,191,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(106,154,191,0.06) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .hero-grid-floor {
+      position: absolute; bottom: 0; left: -30%; right: -30%; height: 55%;
+      background:
+        repeating-linear-gradient(90deg, rgba(63,134,196,0.07) 0, transparent 1px, transparent 80px),
+        repeating-linear-gradient(0deg, rgba(63,134,196,0.07) 0, transparent 1px, transparent 80px);
+      transform: perspective(500px) rotateX(72deg);
+      transform-origin: bottom center;
+    }
+    .hero-grid-floor::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, transparent 0%, var(--black) 80%);
+    }
+    .hero-orb {
+      position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none;
+      width: 600px; height: 400px;
+      background: rgba(63,134,196,0.07);
+      top: 20%; left: 30%; transform: translateX(-50%);
+    }
+    .hero-v-lines {
+      position: absolute; inset: 0;
+      display: flex; justify-content: space-around; pointer-events: none;
+    }
+    .hero-v-line {
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(63,134,196,0.12), transparent);
+      animation: vlinePulse 4s ease-in-out infinite;
+    }
+    .hero-v-line:nth-child(2) { animation-delay: 0.5s }
+    .hero-v-line:nth-child(3) { animation-delay: 1s }
+    .hero-v-line:nth-child(4) { animation-delay: 1.5s }
+    .hero-v-line:nth-child(5) { animation-delay: 2s }
+    @keyframes vlinePulse { 0%,100%{opacity:0.2} 50%{opacity:0.7} }
+
+    .hero-top-fade {
+      position: absolute; top: 0; left: 0; right: 0; height: 140px;
+      background: linear-gradient(to bottom, rgba(6,14,28,0.6), transparent);
+    }
+    .hero-img {
+      position: absolute; right: 2rem; bottom: 0;
+      max-height: 92vh; width: auto; z-index: 5;
+      object-fit: contain; opacity: 0.85;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      padding: 0 4rem 5.5rem;
+      max-width: 720px;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem; color: var(--cyan);
+      letter-spacing: 4px; text-transform: uppercase;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 40px; height: 1px; background: var(--cyan);
+    }
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(4rem,10vw,8rem);
+      line-height: 0.9; letter-spacing: 2px;
+      color: var(--white);
+    }
+    .hero-h1 span { color: var(--cyan); display: block }
+    .hero-tagline {
+      margin: 1.8rem 0 2.5rem;
+      font-size: 1.05rem; font-weight: 400;
+      color: var(--concrete-light); line-height: 1.7;
+      max-width: 500px; letter-spacing: 0.5px;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap }
+    .btn {
+      display: inline-block;
+      font-family: var(--font-body); font-size: 0.85rem;
+      font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      padding: 0.9rem 2.2rem; text-decoration: none;
+      cursor: pointer; border: none;
+      transition: all 0.2s;
+    }
+    .btn-solid { background: var(--white); color: var(--black) }
+    .btn-solid:hover { background: #c4d6e8; transform: translateY(-2px) }
+    .btn-ghost { border: 1px solid rgba(255,255,255,0.2); color: var(--white); background: transparent }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber) }
+
+    .hero-scroll-ind {
+      position: absolute; bottom: 2.5rem; right: 4rem;
+      display: flex; align-items: center; gap: 10px; z-index: 10;
+    }
+    .hero-scroll-ind span {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 3px; color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+    }
+    .scroll-bar {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
+      animation: scrollAnim 2s ease-in-out infinite;
+    }
+    @keyframes scrollAnim { 0%,100%{transform:scaleY(0.3);opacity:0.3} 50%{transform:scaleY(1);opacity:1} }
+
+    /* ─── SECTION COMMONS ─── */
+    .sec-label {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 5px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .sec-label::before { content:''; width:30px; height:1px; background:var(--cyan) }
+    .sec-label.centered { justify-content: center }
+    .sec-label.centered::before { display: none }
+    .sec-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem,5vw,4.5rem);
+      letter-spacing: 2px; line-height: 1;
+      color: var(--white); margin-bottom: 1rem;
+    }
+    .sec-sub {
+      font-size: 1rem; font-weight: 400;
+      color: var(--concrete); line-height: 1.7;
+    }
+
+    /* ─── REVEAL ─── */
+    .reveal { opacity:0; transform:translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease }
+    .reveal.in { opacity:1; transform:translateY(0) }
+
+    /* ─── PRICING SECTION ─── */
+    #pricing {
+      background: var(--navy);
+      padding: 8rem 4rem;
+    }
+    .pricing-header {
+      text-align: center; margin-bottom: 4rem;
+    }
+    .pricing-header .sec-sub {
+      margin: 0 auto; max-width: 560px; text-align: center;
+    }
+
+    /* Pricing grid */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 1px;
+      border: 1px solid rgba(106,154,191,0.25);
+      background: rgba(106,154,191,0.12);
+    }
+    .price-card {
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s, z-index 0s;
+    }
+    .price-card:hover {
+      transform: scale(1.03); z-index: 10;
+      box-shadow: 0 0 60px rgba(63,134,196,0.2), 0 0 0 1px var(--cyan);
+    }
+
+    /* Blueprint drawing area */
+    .pc-bp {
+      padding: 1.5rem 1rem 0.5rem;
+      background:
+        linear-gradient(rgba(63,134,196,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(63,134,196,0.04) 1px, transparent 1px),
+        #060f1e;
+      background-size: 18px 18px;
+      position: relative;
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 260px;
+      border-bottom: 1px dashed rgba(156,198,236,0.25);
+    }
+    .pc-bp::before, .pc-bp::after {
+      content: ''; position: absolute;
+      width: 14px; height: 14px;
+      border-color: rgba(156,198,236,0.6); border-style: solid;
+    }
+    .pc-bp::before { top:6px; left:6px; border-width:1px 0 0 1px }
+    .pc-bp::after  { top:6px; right:6px; border-width:1px 1px 0 0 }
+    .pc-drg-id {
+      position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-mono); font-size: 0.55rem;
+      letter-spacing: 2px; color: rgba(156,198,236,0.5);
+      text-transform: uppercase; white-space: nowrap;
+    }
+
+    /* Card body */
+    .pc-body {
+      padding: 1.2rem; flex: 1;
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .pc-size {
+      font-family: var(--font-display); font-size: 3rem;
+      line-height: 1; color: var(--amber); letter-spacing: 2px;
+    }
+    .pc-duty {
+      display: inline-block;
+      font-family: var(--font-mono); font-size: 0.55rem;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 3px 8px; border: 1px solid var(--dim);
+      color: var(--concrete); width: fit-content;
+    }
+    .pc-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2px }
+    .badge-confirmed {
+      font-family: var(--font-mono); font-size: 0.52rem;
+      letter-spacing: 1.5px; padding: 2px 7px;
+      background: rgba(106,154,191,0.15);
+      border: 1px solid rgba(106,154,191,0.5);
+      color: var(--cyan);
+    }
+    .badge-est {
+      font-family: var(--font-mono); font-size: 0.52rem;
+      letter-spacing: 1.5px; padding: 2px 7px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--concrete);
+    }
+    .pc-price-line {
+      padding: 0.8rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .pc-price-val {
+      font-family: var(--font-display); font-size: 2rem;
+      color: var(--white); line-height: 1; letter-spacing: 1px;
+    }
+    .pc-price-sub {
+      font-family: var(--font-mono); font-size: 0.58rem;
+      letter-spacing: 2px; color: var(--cyan);
+      margin-top: 3px; text-transform: uppercase;
+    }
+    .pc-specs {
+      font-size: 0.73rem; width: 100%; border-collapse: collapse;
+    }
+    .pc-specs tr { border-bottom: 1px solid rgba(255,255,255,0.04) }
+    .pc-specs td { padding: 3px 0; vertical-align: top }
+    .pc-specs td:first-child {
+      color: var(--dim); padding-right: 6px;
+      font-family: var(--font-mono); font-size: 0.65rem;
+    }
+    .pc-specs td:last-child { color: var(--white); font-weight: 600 }
+    .colour-dot {
+      display: inline-block;
+      width: 10px; height: 10px; border-radius: 50%;
+      margin-right: 5px; vertical-align: middle;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .pc-cta {
+      margin-top: auto; padding-top: 0.8rem;
+    }
+    .btn-add-quote {
+      width: 100%;
+      font-family: var(--font-body); font-size: 0.72rem;
+      font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 0.7rem 1rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--concrete);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-add-quote:hover {
+      background: rgba(106,154,191,0.1);
+      border-color: var(--cyan);
+      color: var(--white);
+    }
+
+    /* VAT note strip */
+    .vat-strip {
+      margin-top: 2rem;
+      padding: 1.2rem 1.5rem;
+      background: rgba(6,15,30,0.7);
+      border-left: 3px solid var(--cyan);
+      border: 1px solid rgba(106,154,191,0.15);
+      border-left: 3px solid var(--cyan);
+    }
+    .vat-strip p {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      letter-spacing: 1px; color: var(--concrete);
+      line-height: 1.7;
+    }
+    .vat-strip p:first-child { color: var(--concrete-light); margin-bottom: 4px }
+
+    /* ─── QUOTE BUILDER SECTION ─── */
+    #quote {
+      background: var(--black);
+      padding: 8rem 4rem;
+    }
+    .quote-layout {
+      display: grid; grid-template-columns: 1fr 0.75fr;
+      gap: 4rem; align-items: start;
+    }
+
+    /* Form */
+    .qform-header { margin-bottom: 2.5rem }
+    .form-section-title {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--dim); margin: 1.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .fgroup { display: flex; flex-direction: column; gap: 0.4rem }
+    .fgroup label {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--dim);
+    }
+    .fgroup label .req { color: var(--cyan) }
+    .fgroup input, .fgroup select, .fgroup textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--white);
+      padding: 0.85rem 1rem;
+      font-family: var(--font-body); font-size: 0.95rem;
+      outline: none; transition: border-color 0.2s;
+      resize: vertical;
+    }
+    .fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus {
+      border-color: var(--cyan);
+      background: rgba(63,134,196,0.04);
+    }
+    .fgroup input::placeholder { color: var(--dim) }
+    .fgroup select option { background: #111827 }
+    .fgroup .err-msg {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      color: #ff6b6b; letter-spacing: 1px; display: none;
+    }
+    .fgroup.has-error input, .fgroup.has-error select {
+      border-color: #ff6b6b;
+    }
+    .fgroup.has-error .err-msg { display: block }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem }
+
+    /* Live calc box */
+    .live-calc {
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: rgba(6,15,30,0.8);
+      border-left: 3px solid var(--cyan);
+      border: 1px solid rgba(106,154,191,0.2);
+      border-left: 3px solid var(--cyan);
+    }
+    .live-calc-title {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 1rem;
+    }
+    .calc-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 0.4rem 0;
+    }
+    .calc-row-label {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 1.5px; color: var(--concrete);
+      text-transform: uppercase;
+    }
+    .calc-row-val {
+      font-family: var(--font-display); font-size: 1.4rem;
+      color: var(--white); letter-spacing: 1px;
+    }
+    .calc-divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 0.5rem 0;
+    }
+    .calc-row.grand .calc-row-label { color: var(--concrete-light) }
+    .calc-row.grand .calc-row-val {
+      font-size: 1.8rem; color: var(--amber);
+    }
+
+    /* Transport note */
+    .transport-note {
+      margin: 1rem 0;
+      padding: 1.2rem 1.5rem;
+      background: rgba(255,255,255,0.03);
+      border-left: 3px solid var(--amber);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid rgba(255,255,255,0.3);
+    }
+    .transport-note-title {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--amber-dim); margin-bottom: 0.5rem;
+    }
+    .transport-note p {
+      font-family: var(--font-mono); font-size: 0.67rem;
+      color: var(--concrete); line-height: 1.7; letter-spacing: 0.5px;
+    }
+
+    /* Action buttons */
+    .form-actions { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem }
+    .btn-download {
+      width: 100%;
+      font-family: var(--font-body); font-size: 0.9rem;
+      font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      padding: 1.1rem 2rem;
+      background: var(--white); color: var(--black);
+      border: none; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-download:hover { background: var(--concrete-light); transform: translateY(-2px) }
+    .btn-reset {
+      width: 100%;
+      font-family: var(--font-body); font-size: 0.85rem;
+      font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      background: transparent; color: var(--concrete);
+      border: 1px solid rgba(255,255,255,0.12); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-reset:hover { border-color: var(--amber); color: var(--white) }
+
+    /* ─── LIVE PREVIEW ─── */
+    .preview-panel {
+      position: sticky; top: 100px;
+    }
+    .preview-label {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.8rem;
+    }
+    .invoice-preview {
+      background: #ffffff; color: #1a1a1a;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.78rem;
+      border: 1px solid rgba(106,154,191,0.3);
+      padding: 1.5rem;
+      line-height: 1.5;
+    }
+    .inv-header {
+      display: flex; gap: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 0.8rem;
+    }
+    .inv-company { flex: 1; font-size: 0.72rem }
+    .inv-company strong { display: block; margin-bottom: 3px; font-size: 0.78rem }
+    .inv-meta { min-width: 160px }
+    .inv-meta table { border-collapse: collapse; width: 100% }
+    .inv-meta td { padding: 3px 6px; border: 1px solid #ccc; font-size: 0.68rem }
+    .inv-meta td:first-child { background: #f5f5f5; font-weight: bold }
+    .inv-meta .meta-head td {
+      text-align: center; background: #e8e8e8;
+      font-weight: bold; letter-spacing: 2px; font-size: 0.7rem;
+    }
+    .inv-cust { margin-bottom: 0.8rem }
+    .inv-cust table { border-collapse: collapse; width: 100% }
+    .inv-cust td { padding: 5px 6px; border: 1px solid #ccc; font-size: 0.68rem }
+    .inv-cust th {
+      padding: 5px 6px; border: 1px solid #ccc;
+      background: #f5f5f5; font-size: 0.68rem; text-align: left;
+    }
+    .inv-items table { border-collapse: collapse; width: 100% }
+    .inv-items td, .inv-items th {
+      padding: 5px 6px; border: 1px solid #ddd; font-size: 0.68rem;
+    }
+    .inv-items th { background: #f5f5f5 }
+    .inv-totals td { padding: 4px 6px; border: 1px solid #ddd; font-size: 0.68rem }
+    .inv-transport-note {
+      margin-top: 0.6rem; padding: 0.5rem;
+      background: #fffbe6; border: 1px solid #f0c040; font-size: 0.65rem;
+    }
+    .inv-bank {
+      margin-top: 0.8rem; border-collapse: collapse; width: 100%;
+    }
+    .inv-bank td {
+      padding: 6px 8px; border: 1px solid #ccc; font-size: 0.65rem; vertical-align: top;
+    }
+
+    /* ─── FOOTER ─── */
+    footer.main-footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 2rem 4rem;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    footer.main-footer p {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 2px; color: var(--dim);
+    }
+
+    /* ─── FABs ─── */
+    .whatsapp-fab {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 520;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25d366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      transition: transform 0.2s; text-decoration: none;
+    }
+    .whatsapp-fab:hover { transform: scale(1.1) }
+    .whatsapp-fab svg { width: 30px; height: 30px; fill: #fff }
+
+    #back-to-top {
+      position: fixed; bottom: 5.6rem; right: 1.5rem; z-index: 520;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--steel); border: 1px solid var(--border-amber);
+      color: var(--amber); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transform: translateY(10px);
+      transition: opacity 0.3s, visibility 0.3s, transform 0.3s, background 0.2s;
+    }
+    #back-to-top.show { opacity:1; visibility:visible; transform:translateY(0) }
+    #back-to-top:hover { background: var(--slate) }
+    #back-to-top svg { width:20px; height:20px; stroke:var(--amber); fill:none; stroke-width:2 }
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:1100px) {
+      .pricing-grid { grid-template-columns: repeat(3,1fr) }
+      .quote-layout { grid-template-columns: 1fr }
+      .preview-panel { position: static }
+    }
+    @media(max-width:860px) {
+      nav.main-nav ul { display: none }
+      .nav-toggle { display: flex }
+      .pricing-grid { grid-template-columns: repeat(2,1fr) }
+      #pricing, #quote { padding: 5rem 1.5rem }
+      .hero-content { padding: 0 1.5rem 4.5rem }
+      nav.main-nav { padding: 0.9rem 1.5rem }
+      footer.main-footer { padding: 2rem 1.5rem }
+      .hero-scroll-ind { right: 1.5rem }
+      .hero-img { opacity: 0.35; right: 50%; transform: translateX(50%); max-height: 60vh }
+    }
+    @media(max-width:560px) {
+      .pricing-grid { grid-template-columns: 1fr }
+      .two-col { grid-template-columns: 1fr }
+    }
+
+    /* ─── PRINT ─── */
+    @media print {
+      body > *:not(#printDoc) { display: none !important }
+      #printDoc {
+        display: block !important;
+        font-family: 'Times New Roman', Times, serif;
+        color: #000; background: #fff;
+        margin: 0; padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+  <div id="scroll-progress"></div>
+
+  <!-- ─── NAV ─── -->
+  <nav class="main-nav" role="navigation" aria-label="Main navigation">
+    <a href="accw_updated.html" class="logo-mark" style="gap:0" aria-label="ACCW Home">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO-SYlRD1N9xrdJ9OV8yOSnsCYehXGwSZ.png"
+        alt="ACCW Logo"
+        style="height:58px;width:58px;border-radius:50%;object-fit:cover;
+               border:2px solid rgba(255,255,255,0.25);
+               box-shadow:0 0 12px rgba(255,255,255,0.1);flex-shrink:0" />
+    </a>
+    <ul>
+      <li><a href="accw.html#about">About</a></li>
+      <li><a href="accw.html#products">Products</a></li>
+         <li><a href="accw_pricing.html" class="nav-active" aria-current="page">Pricing</a></li>
+      <li><a href="accw.html#why">Quality</a></li>
+      <li><a href="accw.html#process">Process</a></li>
+      <li><a href="accw.html#faq">FAQ</a></li>
+      <li><a href="accw.html#contact" class="nav-cta">Get Quote</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+    <a href="#about">About</a>
+    <a href="#products">Products</a>
+    <a href="#why">Quality</a>
+    <a href="#process">Process</a>
+    <a href="#faq">FAQ</a>
+    <a href="accw_pricing.html">Pricing</a>
+    <a href="#contact" class="mm-cta">Get Quote</a>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero" aria-label="Pricing hero">
+    <div class="hero-bp-grid" aria-hidden="true"></div>
+    <div class="hero-grid-floor" aria-hidden="true"></div>
+    <div class="hero-orb" aria-hidden="true"></div>
+    <div class="hero-v-lines" aria-hidden="true">
+      <div class="hero-v-line"></div>
+      <div class="hero-v-line"></div>
+      <div class="hero-v-line"></div>
+      <div class="hero-v-line"></div>
+      <div class="hero-v-line"></div>
+    </div>
+    <div class="hero-top-fade" aria-hidden="true"></div>
+    <img src="PRISE1.png" alt="ACCW Concrete Pole" class="hero-img" aria-hidden="true" />
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">SINCE 2016 — ARUSHA, TANZANIA</div>
+      <h1 class="hero-h1">POLE PRICING<span>& PROFORMA</span></h1>
+      <p class="hero-tagline">Transparent pricing on all ACCW prestressed spun concrete poles.
+        Prices shown are exclusive of VAT (18%). Select your pole,
+        enter quantity, and download your proforma invoice instantly.</p>
+      <div class="hero-btns">
+        <a href="#pricing" class="btn btn-solid">View Prices ↓</a>
+        <a href="#quote" class="btn btn-ghost">Build Quote ↓</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-ind" aria-hidden="true">
+      <span>Scroll to explore</span>
+      <div class="scroll-bar"></div>
+    </div>
+  </section>
+
+  <!-- ─── PRICING CARDS ─── -->
+  <section id="pricing" aria-labelledby="pricing-title">
+    <div class="pricing-header reveal">
+      <div class="sec-label centered">Our Pole Range</div>
+      <h2 class="sec-title" id="pricing-title" style="text-align:center">CURRENT POLE PRICES</h2>
+      <p class="sec-sub" style="text-align:center;margin:0 auto;max-width:560px">
+        All prices in Tanzanian Shillings (TSh) · Exclusive of VAT 18% · Valid until further notice
+      </p>
+    </div>
+
+    <div class="pricing-grid reveal" role="list" aria-label="Pricing cards">
+
+      <!-- 9M -->
+      <article class="price-card" role="listitem" aria-label="9M Pole pricing">
+        <div class="pc-bp">
+          <div class="pc-drg-id">DRG-REF: CX-09M-A</div>
+          <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <path d="M38 12 L36 195 L64 195 L62 12 Z" stroke="rgba(106,154,191,0.8)" stroke-width="1" fill="rgba(106,154,191,0.03)"/>
+            <ellipse cx="50" cy="12" rx="11" ry="3" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <ellipse cx="50" cy="195" rx="14" ry="3.5" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <circle cx="41" cy="30" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="59" cy="30" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="41" cy="70" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="59" cy="70" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="41" cy="110" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="59" cy="110" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="41" cy="150" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="59" cy="150" r="2.2" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <path d="M39 45 Q50 41 61 45 Q50 49 39 45" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M39 85 Q50 81 61 85 Q50 89 39 85" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M39 125 Q50 121 61 125 Q50 129 39 125" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M39 165 Q50 161 61 165 Q50 169 39 165" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <rect x="33" y="8" width="34" height="6" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <rect x="29" y="193" width="42" height="8" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <line x1="70" y1="12" x2="70" y2="195" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="67" y1="12" x2="73" y2="12" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="67" y1="195" x2="73" y2="195" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="75" y="108" fill="rgba(106,154,191,0.9)" font-size="8" font-family="'Share Tech Mono',monospace">9m</text>
+            <line x1="36" y1="207" x2="64" y2="207" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="36" y1="204" x2="36" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="64" y1="204" x2="64" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="28" y="218" fill="rgba(180,210,235,0.7)" font-size="6.5" font-family="'Share Tech Mono',monospace">∅310</text>
+            <text x="30" y="9" fill="rgba(180,210,235,0.6)" font-size="5.5" font-family="'Share Tech Mono',monospace">∅190</text>
+          </svg>
+        </div>
+        <div class="pc-body">
+          <div class="pc-size">9M</div>
+          <div class="pc-badges">
+            <span class="pc-duty">LIGHT DUTY</span>
+            <span class="badge-est">Est. Price</span>
+          </div>
+          <div class="pc-price-line">
+            <div class="pc-price-val">TSh 470,000</div>
+            <div class="pc-price-sub">per pole · excl. VAT</div>
+          </div>
+          <table class="pc-specs">
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>310 mm</td></tr>
+            <tr><td>Weight</td><td>~746 kg</td></tr>
+            <tr><td>Colour</td><td><span class="colour-dot" style="background:#111111" aria-hidden="true"></span>Black</td></tr>
+          </table>
+          <div class="pc-cta">
+            <button class="btn-add-quote" onclick="addToQuote('9M',470000)" aria-label="Add 9M pole to quote">Add to Quote →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 10M -->
+      <article class="price-card" role="listitem" aria-label="10M Pole pricing">
+        <div class="pc-bp">
+          <div class="pc-drg-id">DRG-REF: CX-10M-A</div>
+          <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <path d="M37 10 L34 196 L66 196 L63 10 Z" stroke="rgba(106,154,191,0.8)" stroke-width="1" fill="rgba(106,154,191,0.03)"/>
+            <ellipse cx="50" cy="10" rx="12" ry="3" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <ellipse cx="50" cy="196" rx="16" ry="3.5" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <circle cx="40" cy="28" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="60" cy="28" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="40" cy="65" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="60" cy="65" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="40" cy="103" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="60" cy="103" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="40" cy="141" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="60" cy="141" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="40" cy="178" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="60" cy="178" r="2.3" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <path d="M38 43 Q50 39 62 43 Q50 47 38 43" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M38 82 Q50 78 62 82 Q50 86 38 82" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M38 120 Q50 116 62 120 Q50 124 38 120" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M38 158 Q50 154 62 158 Q50 162 38 158" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <rect x="31" y="6" width="38" height="6" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <rect x="27" y="194" width="46" height="8" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <line x1="72" y1="10" x2="72" y2="196" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="69" y1="10" x2="75" y2="10" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="69" y1="196" x2="75" y2="196" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="76" y="108" fill="rgba(106,154,191,0.9)" font-size="8" font-family="'Share Tech Mono',monospace">10m</text>
+            <line x1="34" y1="207" x2="66" y2="207" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="34" y1="204" x2="34" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="66" y1="204" x2="66" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="24" y="218" fill="rgba(180,210,235,0.7)" font-size="6.5" font-family="'Share Tech Mono',monospace">∅323</text>
+            <text x="28" y="9" fill="rgba(180,210,235,0.6)" font-size="5.5" font-family="'Share Tech Mono',monospace">∅190</text>
+          </svg>
+        </div>
+        <div class="pc-body">
+          <div class="pc-size">10M</div>
+          <div class="pc-badges">
+            <span class="pc-duty">STANDARD DUTY</span>
+            <span class="badge-est">Est. Price</span>
+          </div>
+          <div class="pc-price-line">
+            <div class="pc-price-val">TSh 500,000</div>
+            <div class="pc-price-sub">per pole · excl. VAT</div>
+          </div>
+          <table class="pc-specs">
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>323 mm</td></tr>
+            <tr><td>Weight</td><td>~856 kg</td></tr>
+            <tr><td>Colour</td><td><span class="colour-dot" style="background:#2d7a2d" aria-hidden="true"></span>Green</td></tr>
+          </table>
+          <div class="pc-cta">
+            <button class="btn-add-quote" onclick="addToQuote('10M',500000)" aria-label="Add 10M pole to quote">Add to Quote →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 12M -->
+      <article class="price-card" role="listitem" aria-label="12M Pole pricing">
+        <div class="pc-bp">
+          <div class="pc-drg-id">DRG-REF: CX-12M-B</div>
+          <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <path d="M36 8 L32 197 L68 197 L64 8 Z" stroke="rgba(106,154,191,0.8)" stroke-width="1" fill="rgba(106,154,191,0.03)"/>
+            <ellipse cx="50" cy="8" rx="13" ry="3.2" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <ellipse cx="50" cy="197" rx="18" ry="3.8" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <circle cx="39" cy="25" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="61" cy="25" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="39" cy="60" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="61" cy="60" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="39" cy="95" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="61" cy="95" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="39" cy="130" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="61" cy="130" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="39" cy="165" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="61" cy="165" r="2.5" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <path d="M37 42 Q50 38 63 42 Q50 46 37 42" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M37 77 Q50 73 63 77 Q50 81 37 77" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M37 112 Q50 108 63 112 Q50 116 37 112" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M37 147 Q50 143 63 147 Q50 151 37 147" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M36 182 Q50 178 64 182 Q50 186 36 182" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <rect x="30" y="4" width="40" height="6" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <rect x="26" y="195" width="48" height="8" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <line x1="74" y1="8" x2="74" y2="197" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="71" y1="8" x2="77" y2="8" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="71" y1="197" x2="77" y2="197" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="78" y="108" fill="rgba(106,154,191,0.9)" font-size="8" font-family="'Share Tech Mono',monospace">12m</text>
+            <line x1="32" y1="207" x2="68" y2="207" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="32" y1="204" x2="32" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="68" y1="204" x2="68" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="22" y="218" fill="rgba(180,210,235,0.7)" font-size="6.5" font-family="'Share Tech Mono',monospace">∅350</text>
+            <text x="28" y="8" fill="rgba(180,210,235,0.6)" font-size="5.5" font-family="'Share Tech Mono',monospace">∅190</text>
+          </svg>
+        </div>
+        <div class="pc-body">
+          <div class="pc-size">12M</div>
+          <div class="pc-badges">
+            <span class="pc-duty">MEDIUM DUTY</span>
+            <span class="badge-confirmed">★ Confirmed</span>
+          </div>
+          <div class="pc-price-line">
+            <div class="pc-price-val">TSh 870,000</div>
+            <div class="pc-price-sub">per pole · excl. VAT</div>
+          </div>
+          <table class="pc-specs">
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>350 mm</td></tr>
+            <tr><td>Weight</td><td>~1,093 kg</td></tr>
+            <tr><td>Colour</td><td><span class="colour-dot" style="background:#e6c820" aria-hidden="true"></span>Yellow</td></tr>
+          </table>
+          <div class="pc-cta">
+            <button class="btn-add-quote" onclick="addToQuote('12M',870000)" aria-label="Add 12M pole to quote">Add to Quote →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 13M -->
+      <article class="price-card" role="listitem" aria-label="13M Pole pricing">
+        <div class="pc-bp">
+          <div class="pc-drg-id">DRG-REF: CX-13M-B</div>
+          <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <path d="M35 6 L30 198 L70 198 L65 6 Z" stroke="rgba(106,154,191,0.8)" stroke-width="1" fill="rgba(106,154,191,0.03)"/>
+            <ellipse cx="50" cy="6" rx="14" ry="3.2" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <ellipse cx="50" cy="198" rx="20" ry="4" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <circle cx="38" cy="22" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="62" cy="22" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="38" cy="57" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="62" cy="57" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="38" cy="93" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="62" cy="93" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="38" cy="129" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="62" cy="129" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="38" cy="165" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="62" cy="165" r="2.6" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <path d="M36 38 Q50 34 64 38 Q50 42 36 38" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M35 75 Q50 71 65 75 Q50 79 35 75" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M34 111 Q50 107 66 111 Q50 115 34 111" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M33 147 Q50 143 67 147 Q50 151 33 147" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M32 183 Q50 179 68 183 Q50 187 32 183" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <rect x="29" y="2" width="42" height="6" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <rect x="24" y="196" width="52" height="8" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <line x1="76" y1="6" x2="76" y2="198" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="73" y1="6" x2="79" y2="6" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="73" y1="198" x2="79" y2="198" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="80" y="108" fill="rgba(106,154,191,0.9)" font-size="8" font-family="'Share Tech Mono',monospace">13m</text>
+            <line x1="30" y1="207" x2="70" y2="207" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="30" y1="204" x2="30" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="70" y1="204" x2="70" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="20" y="218" fill="rgba(180,210,235,0.7)" font-size="6.5" font-family="'Share Tech Mono',monospace">∅363</text>
+            <text x="27" y="8" fill="rgba(180,210,235,0.6)" font-size="5.5" font-family="'Share Tech Mono',monospace">∅190</text>
+          </svg>
+        </div>
+        <div class="pc-body">
+          <div class="pc-size">13M</div>
+          <div class="pc-badges">
+            <span class="pc-duty">HEAVY DUTY</span>
+            <span class="badge-confirmed">★ Confirmed</span>
+          </div>
+          <div class="pc-price-line">
+            <div class="pc-price-val">TSh 950,000</div>
+            <div class="pc-price-sub">per pole · excl. VAT</div>
+          </div>
+          <table class="pc-specs">
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>363 mm</td></tr>
+            <tr><td>Weight</td><td>~1,240 kg</td></tr>
+            <tr><td>Colour</td><td><span class="colour-dot" style="background:#cc2222" aria-hidden="true"></span>Red</td></tr>
+          </table>
+          <div class="pc-cta">
+            <button class="btn-add-quote" onclick="addToQuote('13M',950000)" aria-label="Add 13M pole to quote">Add to Quote →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 15M -->
+      <article class="price-card" role="listitem" aria-label="15M Pole pricing">
+        <div class="pc-bp">
+          <div class="pc-drg-id">DRG-REF: CX-15M-C</div>
+          <svg width="100" height="220" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="80" x2="100" y2="80" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="120" x2="100" y2="120" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <line x1="0" y1="160" x2="100" y2="160" stroke="rgba(180,210,235,0.06)" stroke-width="0.5"/>
+            <path d="M34 4 L28 200 L72 200 L66 4 Z" stroke="rgba(106,154,191,0.8)" stroke-width="1" fill="rgba(106,154,191,0.03)"/>
+            <ellipse cx="50" cy="4" rx="15" ry="3.5" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <ellipse cx="50" cy="200" rx="22" ry="4.5" stroke="rgba(106,154,191,0.5)" stroke-width="0.7" fill="none"/>
+            <circle cx="37" cy="20" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="63" cy="20" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="37" cy="53" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="63" cy="53" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="37" cy="88" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="63" cy="88" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="37" cy="123" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="63" cy="123" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="37" cy="158" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <circle cx="63" cy="158" r="2.7" stroke="rgba(180,210,235,0.8)" stroke-width="0.8" fill="none"/>
+            <path d="M35 35 Q50 31 65 35 Q50 39 35 35" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M34 70 Q50 66 66 70 Q50 74 34 70" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M33 105 Q50 101 67 105 Q50 109 33 105" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M31 140 Q50 136 69 140 Q50 144 31 140" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <path d="M30 175 Q50 171 70 175 Q50 179 30 175" stroke="rgba(180,210,235,0.5)" stroke-width="0.8" fill="none"/>
+            <rect x="28" y="0" width="44" height="6" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <rect x="22" y="198" width="56" height="8" rx="1" stroke="rgba(106,154,191,0.9)" stroke-width="1" fill="rgba(106,154,191,0.08)"/>
+            <line x1="78" y1="4" x2="78" y2="200" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="75" y1="4" x2="81" y2="4" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="75" y1="200" x2="81" y2="200" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="82" y="108" fill="rgba(106,154,191,0.9)" font-size="8" font-family="'Share Tech Mono',monospace">15m</text>
+            <line x1="28" y1="207" x2="72" y2="207" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="28" y1="204" x2="28" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <line x1="72" y1="204" x2="72" y2="210" stroke="rgba(106,154,191,0.4)" stroke-width="0.5"/>
+            <text x="18" y="218" fill="rgba(180,210,235,0.7)" font-size="6.5" font-family="'Share Tech Mono',monospace">∅390</text>
+            <text x="26" y="6" fill="rgba(180,210,235,0.6)" font-size="5.5" font-family="'Share Tech Mono',monospace">∅190</text>
+          </svg>
+        </div>
+        <div class="pc-body">
+          <div class="pc-size">15M</div>
+          <div class="pc-badges">
+            <span class="pc-duty">EXTRA HEAVY</span>
+            <span class="badge-est">Est. Price</span>
+          </div>
+          <div class="pc-price-line">
+            <div class="pc-price-val">TSh 1,200,000</div>
+            <div class="pc-price-sub">per pole · excl. VAT</div>
+          </div>
+          <table class="pc-specs">
+            <tr><td>Top Ø</td><td>190 mm</td></tr>
+            <tr><td>Base Ø</td><td>390 mm</td></tr>
+            <tr><td>Weight</td><td>~1,520 kg</td></tr>
+            <tr><td>Colour</td><td><span class="colour-dot" style="background:#1e8ac9" aria-hidden="true"></span>Sky Blue</td></tr>
+          </table>
+          <div class="pc-cta">
+            <button class="btn-add-quote" onclick="addToQuote('15M',1200000)" aria-label="Add 15M pole to quote">Add to Quote →</button>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /pricing-grid -->
+
+    <div class="vat-strip reveal" role="note">
+      <p>ℹ&nbsp;&nbsp;All prices above are <strong>EXCLUSIVE of VAT (18%)</strong>. ★ Confirmed prices are from official ACCW invoices. Est. prices are proportional estimates.</p>
+      <p>VAT will be calculated automatically in the quote builder below. &nbsp;·&nbsp; Transport fees are subject to negotiation based on delivery location.</p>
+    </div>
+  </section>
+
+  <!-- ─── QUOTE BUILDER ─── -->
+  <section id="quote" aria-labelledby="quote-title">
+    <div class="quote-layout">
+
+      <!-- LEFT: FORM -->
+      <div>
+        <div class="qform-header reveal">
+          <div class="sec-label">Build Your Order</div>
+          <h2 class="sec-title" id="quote-title">PROFORMA INVOICE GENERATOR</h2>
+          <p class="sec-sub">Fill in your details below. The system will calculate your total
+            (excl. VAT and incl. VAT) and generate a downloadable proforma
+            invoice matching ACCW&apos;s official format.</p>
+        </div>
+
+        <form id="quoteForm" novalidate>
+
+          <div class="form-section-title">── Customer Details ────────────────────────────</div>
+
+          <div class="fgroup reveal" id="fg-cname">
+            <label for="custName">Customer / Company Name <span class="req">*</span></label>
+            <input type="text" id="custName" name="custName" placeholder="e.g. Tanzania Electric Supply Co." required />
+            <span class="err-msg">Customer name is required.</span>
+          </div>
+          <div class="two-col reveal">
+            <div class="fgroup" id="fg-cref">
+              <label for="custRef">Customer Reference / TIN Number</label>
+              <input type="text" id="custRef" name="custRef" placeholder="e.g. TIN-221-123-100" />
+            </div>
+            <div class="fgroup">
+              <label for="custVrn">Customer VRN (Tax Number)</label>
+              <input type="text" id="custVrn" name="custVrn" placeholder="e.g. 40-123456-X" />
+            </div>
+          </div>
+          <div class="two-col reveal">
+            <div class="fgroup">
+              <label for="contactPerson">Contact Person Name</label>
+              <input type="text" id="contactPerson" name="contactPerson" placeholder="e.g. John Mwangi" />
+            </div>
+            <div class="fgroup">
+              <label for="contactPhone">Contact Phone Number</label>
+              <input type="tel" id="contactPhone" name="contactPhone" placeholder="e.g. 0754 000 000" />
+            </div>
+          </div>
+          <div class="two-col reveal">
+            <div class="fgroup">
+              <label for="custEmail">Email Address</label>
+              <input type="email" id="custEmail" name="custEmail" placeholder="e.g. orders@company.co.tz" />
+            </div>
+            <div class="fgroup">
+              <label for="deliveryLoc">Delivery Location</label>
+              <input type="text" id="deliveryLoc" name="deliveryLoc" placeholder="e.g. Dodoma, Tanzania" />
+            </div>
+          </div>
+
+          <div class="form-section-title">── Order Details ────────────────────────────────</div>
+
+          <div class="two-col reveal">
+            <div class="fgroup" id="fg-polesize">
+              <label for="poleSize">Pole Size <span class="req">*</span></label>
+              <select id="poleSize" name="poleSize" required>
+                <option value="">— Select Pole Size —</option>
+                <option value="9M" data-price="470000">9M — TSh 470,000/pole</option>
+                <option value="10M" data-price="500000">10M — TSh 500,000/pole</option>
+                <option value="12M" data-price="870000">12M — TSh 870,000/pole</option>
+                <option value="13M" data-price="950000">13M — TSh 950,000/pole</option>
+                <option value="15M" data-price="1200000">15M — TSh 1,200,000/pole</option>
+              </select>
+              <span class="err-msg">Please select a pole size.</span>
+            </div>
+            <div class="fgroup">
+              <label for="poleClass">Pole Class</label>
+              <input type="text" id="poleClass" name="poleClass" value="75SC" />
+            </div>
+          </div>
+
+          <div class="fgroup reveal" id="fg-qty">
+            <label for="quantity">Quantity (number of poles) <span class="req">*</span></label>
+            <input type="number" id="quantity" name="quantity" min="1" max="9999" value="1" required />
+            <span class="err-msg">Please enter a valid quantity (minimum 1).</span>
+          </div>
+
+          <!-- Live calculation -->
+          <div class="live-calc reveal" id="liveCalc" role="region" aria-label="Live price calculation" aria-live="polite">
+            <div class="live-calc-title">── Live Price Calculation ──────────────────</div>
+            <div class="calc-row">
+              <span class="calc-row-label">Selected</span>
+              <span class="calc-row-val" id="calcSelected" style="font-size:1rem;font-family:var(--font-mono);color:var(--concrete)">—</span>
+            </div>
+            <div class="calc-row">
+              <span class="calc-row-label">Quantity</span>
+              <span class="calc-row-val" id="calcQty" style="font-size:1rem;font-family:var(--font-mono);color:var(--concrete)">—</span>
+            </div>
+            <hr class="calc-divider" />
+            <div class="calc-row">
+              <span class="calc-row-label">Sub Total</span>
+              <span class="calc-row-val" id="calcSub">TSh —</span>
+            </div>
+            <div class="calc-row">
+              <span class="calc-row-label">VAT (18%)</span>
+              <span class="calc-row-val" id="calcVat">TSh —</span>
+            </div>
+            <hr class="calc-divider" />
+            <div class="calc-row grand">
+              <span class="calc-row-label">Grand Total</span>
+              <span class="calc-row-val" id="calcGrand">TSh —</span>
+            </div>
+          </div>
+
+          <!-- Transport note -->
+          <div class="transport-note reveal" role="note">
+            <div class="transport-note-title">⚠&nbsp; Transport Note</div>
+            <p>Transport and delivery fees are <strong>NOT included</strong> in the above price.
+              Fees are subject to negotiation based on your delivery location.
+              Please contact us to arrange delivery:</p>
+            <p style="margin-top:6px"><strong>Tel: 0754 420 577 / 0764 686 840</strong></p>
+          </div>
+
+          <div class="form-section-title">── Invoice Details ──────────────────────────────</div>
+
+          <div class="fgroup reveal">
+            <label for="notes">Notes / Special Instructions (optional)</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Any special requirements, delivery notes, or additional information..."></textarea>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="form-actions reveal">
+            <button type="button" class="btn-download" id="btnDownload" onclick="downloadProforma()">
+              Download Proforma Invoice ↓
+            </button>
+            <button type="button" class="btn-reset" onclick="resetForm()">Reset Form</button>
+          </div>
+
+        </form>
+      </div><!-- /left col -->
+
+      <!-- RIGHT: LIVE PREVIEW -->
+      <div class="preview-panel reveal">
+        <div class="preview-label">LIVE PREVIEW — Proforma Invoice</div>
+        <div class="invoice-preview" id="invoicePreview" aria-label="Live invoice preview" aria-live="polite">
+
+          <!-- Invoice Header -->
+          <div class="inv-header">
+            <div class="inv-company">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO-SYlRD1N9xrdJ9OV8yOSnsCYehXGwSZ.png"
+                alt="ACCW Logo"
+                style="width:50px;height:50px;border-radius:50%;object-fit:cover;float:left;margin-right:10px;margin-bottom:4px"/>
+              <strong>Arusha Concrete &amp; Cement Works Ltd</strong>
+              P.O.Box 952, Arusha, Tanzania<br/>
+              Tel: 0754 420 577 / 0764 686 840<br/>
+              Email: arushaconc@gmail.com<br/>
+              <span style="font-size:0.65rem">VRN: 40-313230-L &nbsp;|&nbsp; TIN: 131-668-376</span>
+            </div>
+            <div class="inv-meta">
+              <table>
+                <tr class="meta-head"><td colspan="2">PROFORMA INVOICE</td></tr>
+                <tr><td>Date</td><td id="pvDate"></td></tr>
+                <tr><td>Currency</td><td>TSh</td></tr>
+                <tr><td>Invoice No.</td><td id="pvInvNo" style="font-weight:bold"></td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Customer -->
+          <div class="inv-cust">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Reference</th>
+                  <th>VRN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="pvCustName" style="font-weight:600">—</td>
+                  <td id="pvCustRef">—</td>
+                  <td id="pvCustVrn">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Line items -->
+          <div class="inv-items">
+            <table>
+              <thead>
+                <tr>
+                  <th>S/No</th>
+                  <th>Pole Size</th>
+                  <th>Class</th>
+                  <th style="text-align:center">Qty</th>
+                  <th style="text-align:right">Unit Price</th>
+                  <th style="text-align:right">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td id="pvPoleSize">—</td>
+                  <td id="pvPoleClass">75SC</td>
+                  <td style="text-align:center" id="pvQty">—</td>
+                  <td style="text-align:right" id="pvUnitPrice">—</td>
+                  <td style="text-align:right" id="pvLineTotal">—</td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="text-align:right">Sub Total</td>
+                  <td colspan="2" style="text-align:right" id="pvSubTotal">TSh —</td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="text-align:right">VAT (18%)</td>
+                  <td colspan="2" style="text-align:right" id="pvVat">TSh —</td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="text-align:right;font-weight:bold">Grand Total</td>
+                  <td colspan="2" style="text-align:right;font-weight:bold;font-style:italic" id="pvGrandTotal">TSh —</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Transport note -->
+          <div class="inv-transport-note">
+            ⚠ <strong>TRANSPORT NOTE:</strong> Transport and delivery fees are NOT included in this proforma.
+            Fees subject to negotiation. Contact: 0754 420 577 / 0764 686 840
+          </div>
+
+          <!-- Bank details -->
+          <table class="inv-bank">
+            <tr>
+              <td>
+                <strong>BANKERS:</strong><br/>
+                CRDB BANK — TSh Account<br/>
+                Abdulrahim Gaher<br/>
+                <strong>0152596894901</strong>
+              </td>
+              <td>
+                <strong>CONTACTS:</strong><br/>
+                Plant Manager: 0786168162<br/>
+                CEO: 0764 686 840
+              </td>
+            </tr>
+          </table>
+
+          <div style="margin-top:0.6rem;font-size:0.6rem;color:#666;font-style:italic;text-align:center">
+            This is a proforma invoice and not a tax invoice. Final tax invoice will be issued upon order confirmation.
+          </div>
+
+        </div><!-- /invoice-preview -->
+      </div><!-- /preview-panel -->
+
+    </div><!-- /quote-layout -->
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="main-footer" role="contentinfo">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO-SYlRD1N9xrdJ9OV8yOSnsCYehXGwSZ.png"
+        alt="ACCW"
+        style="height:44px;width:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);object-fit:cover"/>
+      <span style="font-family:var(--font-display);font-size:1.3rem;letter-spacing:4px;color:var(--white)">ACCW</span>
+    </div>
+    <p>© 2026 Arusha Concrete and Cement Works Limited · Kilimamoto, Arusha · P.O. Box 952</p>
+    <p>TCPM CERTIFIED · IEC COMPLIANT · <a href="https://instagram.com/accwarusha" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">@accwarusha</a></p>
+  </footer>
+
+  <!-- ─── BACK TO TOP ─── -->
+  <button id="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ─── WHATSAPP FAB ─── -->
+  <a href="https://wa.me/255754420577?text=Hello%20ACCW%2C%20I%27d%20like%20a%20proforma%20invoice%20for%20concrete%20poles."
+    class="whatsapp-fab" target="_blank" rel="noopener noreferrer" aria-label="Contact ACCW on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- Hidden print element -->
+  <div id="printDoc" style="display:none"></div>
+
+  <!-- ─── JavaScript ─── -->
+  <script src="accw_pricing.js"></script>
+</body>
+</html>
