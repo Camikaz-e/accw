@@ -2,8 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/", "destination": "/accw.html" },
-    { "source": "/accw", "destination": "/accw.html" },
-    { "source": "/pricing", "destination": "/accw_pricing.html" }
+    { "source": "/", "destination": "/accw" },
+    { "source": "/pricing", "destination": "/accw_pricing" }
   ]
 }
