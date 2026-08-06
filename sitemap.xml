@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-       <loc>https://accwarusha.vercel.app/accw.html</loc>
+       <loc>https://accwarusha.vercel.app/</loc>
        <lastmod>2026-08-05</lastmod>
        <changefreq>weekly</changefreq>
        <priority>1.0000</priority>
   </url>
   <url>
-       <loc>https://accwarusha.vercel.app/accw_pricing.html</loc>
+       <loc>https://accwarusha.vercel.app/pricing</loc>
        <lastmod>2026-08-05</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.8000</priority>
