@@ -1,0 +1,10 @@
+[33mcommit e936d21bc8df551f7d3b0feb326025fa393697be[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Camikaz-e <camikaze1738@gmail.com>
+Date:   Wed Aug 5 09:47:40 2026 +0300
+
+    Switch to clean URLs across nav, footer, and meta tags
+
+ accw.html         |  2 [32m+[m[31m-[m
+ accw_pricing.html | 16 [32m++++++++[m[31m--------[m
+ vercel.json       |  9 [32m+++++++++[m
+ 3 files changed, 18 insertions(+), 9 deletions(-)
