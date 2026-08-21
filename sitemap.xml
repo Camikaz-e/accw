@@ -3,13 +3,19 @@
 
   <url>
        <loc>https://arushaconcrete.co.tz/</loc>
-       <lastmod>2026-08-12</lastmod>
+       <lastmod>2026-08-21</lastmod>
        <changefreq>weekly</changefreq>
        <priority>1.0000</priority>
   </url>
   <url>
+       <loc>https://arushaconcrete.co.tz/products</loc>
+       <lastmod>2026-08-21</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.9000</priority>
+  </url>
+  <url>
        <loc>https://arushaconcrete.co.tz/pricing</loc>
-       <lastmod>2026-08-12</lastmod>
+       <lastmod>2026-08-21</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.8000</priority>
   </url>

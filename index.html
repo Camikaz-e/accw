@@ -1015,6 +1015,14 @@
       justify-content: center;
     }
 
+    #bend-test {
+      background: var(--steel);
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
     .factory-image-container {
       position: relative;
       width: 100%;
@@ -1722,6 +1730,7 @@
 
       #about,
       #why,
+      #bend-test,
       #contact {
         grid-template-columns: 1fr;
         gap: 3rem
@@ -2464,6 +2473,10 @@
         Hollow section (spun core)
       </div>
     </div>
+
+    <div style="text-align: center; margin-top: 3rem;">
+      <a href="/products" class="btn btn-solid" style="display: inline-block;">SEE MORE PRODUCTS WE PRODUCE</a>
+    </div>
   </section>
 
   <!-- ─── WHY ─── -->
@@ -2501,15 +2514,13 @@
           <p>Large yard stock and trusted logistics partners ensure on-time delivery to any site in East Africa.</p>
         </div>
       </div>
-
-      <div class="certif-box">
-        <div class="cert-icon">TCPM</div>
-        <div class="cert-text">
-          <h4>Tanzania Concrete Poles Manufacturing CO.LTD</h4>
-          <p>All poles are manufactured, tested, and documented to TCPM and international IEC specifications. Full test
-            certificates available on request.</p>
-        </div>
-      </div>
+<div class="certif-box">
+  <img src="tcpm-logo.png" alt="TCPM - Tanzania Concrete Poles Manufacturing certification logo" style="height: 48px; width: auto; flex-shrink: 0;">
+  <div class="cert-text">
+    <h4>Tanzania Concrete Poles Manufacturing CO.LTD</h4>
+    <p>All poles are manufactured, tested, and documented to TCPM and international IEC specifications. Full test certificates available on request.</p>
+  </div>
+</div>
     </div>
 
     <div class="why-visual reveal">
@@ -2522,6 +2533,28 @@
         <img src="plant.webp" alt="ACCW Concrete Poles Factory Production" class="factory-image" />
         <div class="factory-image-caption">FACTORY PRODUCTION YARD</div>
       </div>
+    </div>
+  </section>
+
+  <!-- ─── BEND TEST ─── -->
+  <section id="bend-test">
+    <div class="why-visual reveal">
+      <div class="factory-image-container">
+        <div class="factory-image-overlay"></div>
+        <div class="corner-tick top-left"></div>
+        <div class="corner-tick top-right"></div>
+        <div class="corner-tick bottom-left"></div>
+        <div class="corner-tick bottom-right"></div>
+        <img src="bend-test.jpg" alt="Bend test being performed on prestressed concrete pole at ACCW facility" class="factory-image" />
+        <div class="factory-image-caption">BEND TEST IN PROGRESS</div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="sec-label">Quality Assurance</div>
+      <h2 class="sec-title">HOW WE BEND TEST EVERY BATCH</h2>
+      <p class="sec-body">Each pole is anchored horizontally and subjected to a controlled bending moment applied at a fixed distance from the base, in line with IEC 60068 testing procedures. A calibrated load is applied incrementally while deflection is measured and logged at each stage.</p>
+      <p class="sec-body" style="margin-top: 1rem;">The pole must reach its rated load without cracking beyond allowable limits, and return within acceptable deflection tolerances once the load is released. Results are recorded on-site and kept on file — full test certificates are available on request for every batch produced.</p>
     </div>
   </section>
 
@@ -2582,7 +2615,7 @@
         <h2 class="sec-title">FREQUENTLY ASKED</h2>
         
         <div class="faq-list">
-          <div class="faq-item">
+          <div class="faq-item" data-image="poles-yard.jpg" data-caption="POLE INVENTORY">
             <button class="faq-q">What pole sizes and load classes do you produce?<span class="faq-ico">+</span></button>
             <div class="faq-a">
               <p>We manufacture prestressed spun concrete poles in 9M, 10M, 12M, 13M, and 15M lengths, across multiple
@@ -2590,39 +2623,32 @@
                 classes can be produced to order.</p>
             </div>
           </div>
-          <div class="faq-item">
+          <div class="faq-item" data-image="bend-test.jpg" data-caption="BEND TEST IN PROGRESS">
             <button class="faq-q">What standards are your poles certified to?<span class="faq-ico">+</span></button>
             <div class="faq-a">
               <p>Every batch is produced and tested to TCPM and IEC standards. We perform dimensional checks, concrete-cover
                 measurement, and both destructive and non-destructive bending tests, with certificates logged per batch.</p>
             </div>
           </div>
-          <div class="faq-item">
-            <button class="faq-q">What is the typical lead time for a large order?<span class="faq-ico">+</span></button>
-            <div class="faq-a">
-              <p>Lead time depends on quantity and pole class, but most standard orders ship within 2–4 weeks. For framework
-                supply agreements we hold buffer stock to support faster delivery. Share your volume and timeline and we
-                will confirm a schedule.</p>
-            </div>
-          </div>
-          <div class="faq-item">
+          <div class="faq-item" data-image="delivery-truck.jpg" data-caption="NATIONWIDE DELIVERY">
             <button class="faq-q">Do you deliver across Tanzania and East Africa?<span class="faq-ico">+</span></button>
             <div class="faq-a">
               <p>Yes. We arrange transport and site delivery throughout Tanzania and to neighbouring East African markets.
                 Delivery cost is quoted based on destination, quantity, and pole length.</p>
             </div>
           </div>
-          <div class="faq-item">
+          <div class="faq-item" data-image="quotations.jpg" data-caption="REQUEST A QUOTE">
             <button class="faq-q">How do I request a quote or data sheet?<span class="faq-ico">+</span></button>
             <div class="faq-a">
-              <p>Use the enquiry form below or message us on WhatsApp. Tell us the pole size, quantity, and delivery
-                location, and our engineering team responds within 24 hours with a proposal and technical data sheet.</p>
+              <p>Message us directly on WhatsApp with your pole size, quantity, and delivery location for a fast reply, or
+                build your own instant quotation on our <a href="/pricing" style="color: var(--amber); text-decoration: underline;">pricing page</a> —
+                select your pole class and quantity to generate a proforma invoice in minutes.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right Column: Image Section (Added Later) -->
+      <!-- Right Column: Image Section -->
       <div class="faq-visual">
         <div class="faq-image-container">
           <div class="faq-image-overlay"></div>
@@ -2630,10 +2656,8 @@
           <div class="corner-tick top-right"></div>
           <div class="corner-tick bottom-left"></div>
           <div class="corner-tick bottom-right"></div>
-          <div class="faq-image-placeholder" style="display:flex;align-items:center;justify-content:center;height:100%">
-  <img src="MER.jpg" alt="FAQ Visual" style="width:100%;height:100%;object-fit:cover;border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,0.15)"/>
-</div>
-          <div class="faq-image-caption">QUALITY AUDIT &amp; COMPLIANCE</div>
+          <img id="faq-dynamic-image" src="poles-yard.jpg" alt="FAQ Visual" style="width:100%;height:100%;object-fit:cover;transition:opacity 0.25s ease;" />
+          <div class="faq-image-caption" id="faq-dynamic-caption">POLE INVENTORY</div>
         </div>
       </div>
     </div>
@@ -2871,8 +2895,11 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // FAQ accordion
-    document.querySelectorAll('.faq-item').forEach(item => {
+    // FAQ accordion with dynamic image swap
+    const faqImage = document.getElementById('faq-dynamic-image');
+    const faqCaption = document.getElementById('faq-dynamic-caption');
+
+    document.querySelectorAll('.faq-item').forEach((item, idx) => {
       const q = item.querySelector('.faq-q');
       const a = item.querySelector('.faq-a');
       q.addEventListener('click', () => {
@@ -2884,8 +2911,21 @@
         if (!isOpen) {
           item.classList.add('open');
           a.style.maxHeight = a.scrollHeight + 'px';
+          if (faqImage && item.dataset.image) {
+            faqImage.style.opacity = '0';
+            setTimeout(() => {
+              faqImage.src = item.dataset.image;
+              faqCaption.textContent = item.dataset.caption || '';
+              faqImage.style.opacity = '1';
+            }, 150);
+          }
         }
       });
+      // Open the first FAQ by default
+      if (idx === 0) {
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
     });
 
   </script>
